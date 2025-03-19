@@ -1,0 +1,21 @@
+{
+  "name": "go-portfolio",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild src/static/js/holosphere.js src/static/js/photocube.js src/static/js/main.js --bundle --outdir=./src/public/ --minify",
+    "watch": "esbuild src/static/js/holosphere.js src/static/js/photocube.js src/static/js/main.js --bundle --outdir=./src/public/ --watch --sourcemap",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cannon-es": "^0.20.0",
+    "three": "^0.174.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.1"
+  }
+}

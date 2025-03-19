@@ -1,0 +1,67 @@
+{{define "base"}}
+<!doctype html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8'>
+        <title>Portfolio</title>
+        <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+        <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+        <script src="https://kit.fontawesome.com/0cdcaaf032.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        
+        <nav>
+            <div class="navleft">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="/">Work</a>
+                <a href="/">Projects</a>
+                <a href="/">Contact</a>
+            </div>
+            <div class="navright">
+                <a href="link"><i class="fa-brands fa-github" id="github-icon"></i></a>
+                <a href="link"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+        </nav>
+        
+        <section id="home">
+
+            <canvas id="holo-render"></canvas>
+        
+            <div id="intro-text">
+                <!-- <img src="/static/img/headshot.jpg" alt="A picture of Brayden Aldrich"> -->
+                <h1>    
+                    Brayden Aldrich 
+                </h1>
+            </div>
+            <a href="#about"><span></span></a>
+        </section>
+
+        <section id="about">
+            <p>I'm a senior at Oregon State studying computer science. I love to build creative solutions and solve practical problems. Outside coding, you can find me playing and making music, reading everything scifi/fantasy, and playing games.</p>
+            
+            <canvas id="photocube"></canvas>
+            <a href="#work"><span></span></a>
+        </section>
+        <section id="work">
+            
+            <li>
+                <p>blahblahblah</p>
+            </li>
+            <a href=""><span></span></a>
+        </section>
+
+        
+       
+        <footer>Powered by <a href='https://golang.org/'>Go</a> and <a href="https://threejs.org/">three.js</a></footer>
+        <script type="module" src="/public/main.js"></script>
+        <script type="module" src="/public/holosphere.js"></script>
+        <script type="module" src="/public/photocube.js"></script>
+        
+    </body>
+</html>
+{{end}}
