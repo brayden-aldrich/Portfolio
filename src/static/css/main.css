@@ -142,6 +142,11 @@ nav a {
 
     text-decoration: none;
     color: white;
+    font-size: 1.25rem;
+}
+nav i {
+    font-size: 1.5rem;
+    padding-left: 1.5rem;
 }
 
 nav a:hover {
@@ -182,14 +187,15 @@ footer a:hover {
 #about  {
     background: 
         radial-gradient(circle at left, rgba(174,211,255,1), rgba(255,255,255,1) 50%) center;
-
+    display: flex;
 }
 
 
-#about p {
+#left-about-p {
     display: block;
     width: 25%;
     max-width: 25%;
+    height: 50vh;
     align-items: center;
     align-content: center;
     color: rgb(34, 40, 45);
@@ -203,7 +209,37 @@ footer a:hover {
     margin: 0; 
 }
 
-#photosphere {
-    display: flex;
+
+#right-about-p {
+    display: block;
     width: 25%;
+    max-width: 25%;
+    height: 50vh;
+    align-items: center;
+    align-content: center;
+    color: rgb(34, 40, 45);
+    text-align: right; 
+    position: absolute;
+    padding: 1.5vw;
+    
+    top: 25vh; 
+    right: 0; 
+    font-size: 2rem;
+    margin: 0; 
+}
+
+#work-left {
+    display: block;
+    
+    height: 15vh;
+    
+    align-content: center;
+    color: rgb(34, 40, 45);
+    text-align: left; 
+    position: absolute;
+    padding: 1.5vw;
+    
+    left: 0; 
+    font-size: 2rem;
+    margin: 0; 
 }

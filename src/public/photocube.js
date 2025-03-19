@@ -593,7 +593,7 @@
     }
     throw new Error(`Unknown texture type ${type}.`);
   }
-  var REVISION, MOUSE, TOUCH, CullFaceNone, CullFaceBack, CullFaceFront, PCFShadowMap, PCFSoftShadowMap, VSMShadowMap, FrontSide, BackSide, DoubleSide, NoBlending, NormalBlending, AdditiveBlending, SubtractiveBlending, MultiplyBlending, CustomBlending, AddEquation, SubtractEquation, ReverseSubtractEquation, MinEquation, MaxEquation, ZeroFactor, OneFactor, SrcColorFactor, OneMinusSrcColorFactor, SrcAlphaFactor, OneMinusSrcAlphaFactor, DstAlphaFactor, OneMinusDstAlphaFactor, DstColorFactor, OneMinusDstColorFactor, SrcAlphaSaturateFactor, ConstantColorFactor, OneMinusConstantColorFactor, ConstantAlphaFactor, OneMinusConstantAlphaFactor, NeverDepth, AlwaysDepth, LessDepth, LessEqualDepth, EqualDepth, GreaterEqualDepth, GreaterDepth, NotEqualDepth, MultiplyOperation, MixOperation, AddOperation, NoToneMapping, LinearToneMapping, ReinhardToneMapping, CineonToneMapping, ACESFilmicToneMapping, CustomToneMapping, AgXToneMapping, NeutralToneMapping, UVMapping, CubeReflectionMapping, CubeRefractionMapping, EquirectangularReflectionMapping, EquirectangularRefractionMapping, CubeUVReflectionMapping, RepeatWrapping, ClampToEdgeWrapping, MirroredRepeatWrapping, NearestFilter, NearestMipmapNearestFilter, NearestMipmapLinearFilter, LinearFilter, LinearMipmapNearestFilter, LinearMipmapLinearFilter, UnsignedByteType, ByteType, ShortType, UnsignedShortType, IntType, UnsignedIntType, FloatType, HalfFloatType, UnsignedShort4444Type, UnsignedShort5551Type, UnsignedInt248Type, UnsignedInt5999Type, AlphaFormat, RGBFormat, RGBAFormat, LuminanceFormat, LuminanceAlphaFormat, DepthFormat, DepthStencilFormat, RedFormat, RedIntegerFormat, RGFormat, RGIntegerFormat, RGBAIntegerFormat, RGB_S3TC_DXT1_Format, RGBA_S3TC_DXT1_Format, RGBA_S3TC_DXT3_Format, RGBA_S3TC_DXT5_Format, RGB_PVRTC_4BPPV1_Format, RGB_PVRTC_2BPPV1_Format, RGBA_PVRTC_4BPPV1_Format, RGBA_PVRTC_2BPPV1_Format, RGB_ETC1_Format, RGB_ETC2_Format, RGBA_ETC2_EAC_Format, RGBA_ASTC_4x4_Format, RGBA_ASTC_5x4_Format, RGBA_ASTC_5x5_Format, RGBA_ASTC_6x5_Format, RGBA_ASTC_6x6_Format, RGBA_ASTC_8x5_Format, RGBA_ASTC_8x6_Format, RGBA_ASTC_8x8_Format, RGBA_ASTC_10x5_Format, RGBA_ASTC_10x6_Format, RGBA_ASTC_10x8_Format, RGBA_ASTC_10x10_Format, RGBA_ASTC_12x10_Format, RGBA_ASTC_12x12_Format, RGBA_BPTC_Format, RGB_BPTC_SIGNED_Format, RGB_BPTC_UNSIGNED_Format, RED_RGTC1_Format, SIGNED_RED_RGTC1_Format, RED_GREEN_RGTC2_Format, SIGNED_RED_GREEN_RGTC2_Format, InterpolateDiscrete, InterpolateLinear, InterpolateSmooth, ZeroCurvatureEnding, ZeroSlopeEnding, WrapAroundEnding, BasicDepthPacking, RGBADepthPacking, TangentSpaceNormalMap, ObjectSpaceNormalMap, NoColorSpace, SRGBColorSpace, LinearSRGBColorSpace, LinearTransfer, SRGBTransfer, KeepStencilOp, AlwaysStencilFunc, NeverCompare, LessCompare, EqualCompare, LessEqualCompare, GreaterCompare, NotEqualCompare, GreaterEqualCompare, AlwaysCompare, StaticDrawUsage, GLSL3, WebGLCoordinateSystem, WebGPUCoordinateSystem, EventDispatcher, _lut, _seed, DEG2RAD, RAD2DEG, MathUtils, Vector2, Matrix3, _m3, _cache, LINEAR_REC709_TO_XYZ, XYZ_TO_LINEAR_REC709, ColorManagement, _canvas, ImageUtils, _sourceId, Source, _textureId, Texture, Vector4, RenderTarget, WebGLRenderTarget, DataArrayTexture, Data3DTexture, Quaternion, Vector3, _vector$c, _quaternion$4, Box3, _points, _vector$b, _box$4, _v0$2, _v1$7, _v2$4, _f0, _f1, _f2, _center, _extents, _triangleNormal, _testAxis, _box$3, _v1$6, _v2$3, Sphere, _vector$a, _segCenter, _segDir, _diff, _edge1, _edge2, _normal$1, Ray, Matrix4, _v1$5, _m1$2, _zero, _one, _x, _y, _z, _matrix$2, _quaternion$3, Euler, Layers, _object3DId, _v1$4, _q1, _m1$1, _target, _position$3, _scale$2, _quaternion$2, _xAxis, _yAxis, _zAxis, _addedEvent, _removedEvent, _childaddedEvent, _childremovedEvent, Object3D, _v0$1, _v1$3, _v2$2, _v3$2, _vab, _vac, _vbc, _vap, _vbp, _vcp, _v40, _v41, _v42, Triangle, _colorKeywords, _hslA, _hslB, Color, _color, _materialId, Material, MeshBasicMaterial, _vector$9, _vector2$1, _id$2, BufferAttribute, Uint16BufferAttribute, Uint32BufferAttribute, Float32BufferAttribute, _id$1, _m1, _obj, _offset, _box$2, _boxMorphTargets, _vector$8, BufferGeometry, _inverseMatrix$3, _ray$3, _sphere$6, _sphereHitAt, _vA$1, _vB$1, _vC$1, _tempA, _morphA, _intersectionPoint, _intersectionPointWorld, Mesh, BoxGeometry, UniformsUtils, default_vertex, default_fragment, ShaderMaterial, Camera, _v3$1, _minTarget, _maxTarget, PerspectiveCamera, fov, aspect, CubeCamera, CubeTexture, WebGLCubeRenderTarget, Group, _moveEvent, WebXRController, Scene, _vector1, _vector2, _normalMatrix, Plane, _sphere$3, _vector$6, Frustum, DepthTexture, PlaneGeometry, MeshStandardMaterial, MeshDepthMaterial, MeshDistanceMaterial, Interpolant, CubicInterpolant, LinearInterpolant, DiscreteInterpolant, KeyframeTrack, BooleanKeyframeTrack, ColorKeyframeTrack, NumberKeyframeTrack, QuaternionLinearInterpolant, QuaternionKeyframeTrack, StringKeyframeTrack, VectorKeyframeTrack, Cache, LoadingManager, DefaultLoadingManager, Loader, ImageLoader, TextureLoader, Light, _projScreenMatrix$1, _lightPositionWorld$1, _lookTarget$1, LightShadow, _projScreenMatrix, _lightPositionWorld, _lookTarget, PointLightShadow, PointLight, OrthographicCamera, AmbientLight, ArrayCamera, _RESERVED_CHARS_RE, _reservedRe, _wordChar, _wordCharOrDot, _directoryRe, _nodeRe, _objectRe, _propertyRe, _trackRe, _supportedObjectNames, Composite, PropertyBinding, _controlInterpolantsResultBuffer, _matrix, Raycaster, Spherical, Controls;
+  var REVISION, MOUSE, TOUCH, CullFaceNone, CullFaceBack, CullFaceFront, PCFShadowMap, PCFSoftShadowMap, VSMShadowMap, FrontSide, BackSide, DoubleSide, NoBlending, NormalBlending, AdditiveBlending, SubtractiveBlending, MultiplyBlending, CustomBlending, AddEquation, SubtractEquation, ReverseSubtractEquation, MinEquation, MaxEquation, ZeroFactor, OneFactor, SrcColorFactor, OneMinusSrcColorFactor, SrcAlphaFactor, OneMinusSrcAlphaFactor, DstAlphaFactor, OneMinusDstAlphaFactor, DstColorFactor, OneMinusDstColorFactor, SrcAlphaSaturateFactor, ConstantColorFactor, OneMinusConstantColorFactor, ConstantAlphaFactor, OneMinusConstantAlphaFactor, NeverDepth, AlwaysDepth, LessDepth, LessEqualDepth, EqualDepth, GreaterEqualDepth, GreaterDepth, NotEqualDepth, MultiplyOperation, MixOperation, AddOperation, NoToneMapping, LinearToneMapping, ReinhardToneMapping, CineonToneMapping, ACESFilmicToneMapping, CustomToneMapping, AgXToneMapping, NeutralToneMapping, UVMapping, CubeReflectionMapping, CubeRefractionMapping, EquirectangularReflectionMapping, EquirectangularRefractionMapping, CubeUVReflectionMapping, RepeatWrapping, ClampToEdgeWrapping, MirroredRepeatWrapping, NearestFilter, NearestMipmapNearestFilter, NearestMipmapLinearFilter, LinearFilter, LinearMipmapNearestFilter, LinearMipmapLinearFilter, UnsignedByteType, ByteType, ShortType, UnsignedShortType, IntType, UnsignedIntType, FloatType, HalfFloatType, UnsignedShort4444Type, UnsignedShort5551Type, UnsignedInt248Type, UnsignedInt5999Type, AlphaFormat, RGBFormat, RGBAFormat, LuminanceFormat, LuminanceAlphaFormat, DepthFormat, DepthStencilFormat, RedFormat, RedIntegerFormat, RGFormat, RGIntegerFormat, RGBAIntegerFormat, RGB_S3TC_DXT1_Format, RGBA_S3TC_DXT1_Format, RGBA_S3TC_DXT3_Format, RGBA_S3TC_DXT5_Format, RGB_PVRTC_4BPPV1_Format, RGB_PVRTC_2BPPV1_Format, RGBA_PVRTC_4BPPV1_Format, RGBA_PVRTC_2BPPV1_Format, RGB_ETC1_Format, RGB_ETC2_Format, RGBA_ETC2_EAC_Format, RGBA_ASTC_4x4_Format, RGBA_ASTC_5x4_Format, RGBA_ASTC_5x5_Format, RGBA_ASTC_6x5_Format, RGBA_ASTC_6x6_Format, RGBA_ASTC_8x5_Format, RGBA_ASTC_8x6_Format, RGBA_ASTC_8x8_Format, RGBA_ASTC_10x5_Format, RGBA_ASTC_10x6_Format, RGBA_ASTC_10x8_Format, RGBA_ASTC_10x10_Format, RGBA_ASTC_12x10_Format, RGBA_ASTC_12x12_Format, RGBA_BPTC_Format, RGB_BPTC_SIGNED_Format, RGB_BPTC_UNSIGNED_Format, RED_RGTC1_Format, SIGNED_RED_RGTC1_Format, RED_GREEN_RGTC2_Format, SIGNED_RED_GREEN_RGTC2_Format, InterpolateDiscrete, InterpolateLinear, InterpolateSmooth, ZeroCurvatureEnding, ZeroSlopeEnding, WrapAroundEnding, BasicDepthPacking, RGBADepthPacking, TangentSpaceNormalMap, ObjectSpaceNormalMap, NoColorSpace, SRGBColorSpace, LinearSRGBColorSpace, LinearTransfer, SRGBTransfer, KeepStencilOp, AlwaysStencilFunc, NeverCompare, LessCompare, EqualCompare, LessEqualCompare, GreaterCompare, NotEqualCompare, GreaterEqualCompare, AlwaysCompare, StaticDrawUsage, GLSL3, WebGLCoordinateSystem, WebGPUCoordinateSystem, EventDispatcher, _lut, _seed, DEG2RAD, RAD2DEG, MathUtils, Vector2, Matrix3, _m3, _cache, LINEAR_REC709_TO_XYZ, XYZ_TO_LINEAR_REC709, ColorManagement, _canvas, ImageUtils, _sourceId, Source, _textureId, Texture, Vector4, RenderTarget, WebGLRenderTarget, DataArrayTexture, Data3DTexture, Quaternion, Vector3, _vector$c, _quaternion$4, Box3, _points, _vector$b, _box$4, _v0$2, _v1$7, _v2$4, _f0, _f1, _f2, _center, _extents, _triangleNormal, _testAxis, _box$3, _v1$6, _v2$3, Sphere, _vector$a, _segCenter, _segDir, _diff, _edge1, _edge2, _normal$1, Ray, Matrix4, _v1$5, _m1$2, _zero, _one, _x, _y, _z, _matrix$2, _quaternion$3, Euler, Layers, _object3DId, _v1$4, _q1, _m1$1, _target, _position$3, _scale$2, _quaternion$2, _xAxis, _yAxis, _zAxis, _addedEvent, _removedEvent, _childaddedEvent, _childremovedEvent, Object3D, _v0$1, _v1$3, _v2$2, _v3$2, _vab, _vac, _vbc, _vap, _vbp, _vcp, _v40, _v41, _v42, Triangle, _colorKeywords, _hslA, _hslB, Color, _color, _materialId, Material, MeshBasicMaterial, _vector$9, _vector2$1, _id$2, BufferAttribute, Uint16BufferAttribute, Uint32BufferAttribute, Float32BufferAttribute, _id$1, _m1, _obj, _offset, _box$2, _boxMorphTargets, _vector$8, BufferGeometry, _inverseMatrix$3, _ray$3, _sphere$6, _sphereHitAt, _vA$1, _vB$1, _vC$1, _tempA, _morphA, _intersectionPoint, _intersectionPointWorld, Mesh, BoxGeometry, UniformsUtils, default_vertex, default_fragment, ShaderMaterial, Camera, _v3$1, _minTarget, _maxTarget, PerspectiveCamera, fov, aspect, CubeCamera, CubeTexture, WebGLCubeRenderTarget, Group, _moveEvent, WebXRController, Scene, _vector1, _vector2, _normalMatrix, Plane, _sphere$3, _vector$6, Frustum, DepthTexture, PlaneGeometry, MeshDepthMaterial, MeshDistanceMaterial, Interpolant, CubicInterpolant, LinearInterpolant, DiscreteInterpolant, KeyframeTrack, BooleanKeyframeTrack, ColorKeyframeTrack, NumberKeyframeTrack, QuaternionLinearInterpolant, QuaternionKeyframeTrack, StringKeyframeTrack, VectorKeyframeTrack, Cache, LoadingManager, DefaultLoadingManager, Loader, ImageLoader, TextureLoader, Light, _projScreenMatrix$1, _lightPositionWorld$1, _lookTarget$1, LightShadow, _projScreenMatrix, _lightPositionWorld, _lookTarget, PointLightShadow, PointLight, OrthographicCamera, AmbientLight, ArrayCamera, _RESERVED_CHARS_RE, _reservedRe, _wordChar, _wordCharOrDot, _directoryRe, _nodeRe, _objectRe, _propertyRe, _trackRe, _supportedObjectNames, Composite, PropertyBinding, _controlInterpolantsResultBuffer, _matrix, Raycaster, Spherical, Controls;
   var init_three_core = __esm({
     "node_modules/three/build/three.core.js"() {
       REVISION = "174";
@@ -12220,82 +12220,6 @@
          */
         static fromJSON(data) {
           return new _PlaneGeometry(data.width, data.height, data.widthSegments, data.heightSegments);
-        }
-      };
-      MeshStandardMaterial = class extends Material {
-        constructor(parameters) {
-          super();
-          this.isMeshStandardMaterial = true;
-          this.type = "MeshStandardMaterial";
-          this.defines = { "STANDARD": "" };
-          this.color = new Color(16777215);
-          this.roughness = 1;
-          this.metalness = 0;
-          this.map = null;
-          this.lightMap = null;
-          this.lightMapIntensity = 1;
-          this.aoMap = null;
-          this.aoMapIntensity = 1;
-          this.emissive = new Color(0);
-          this.emissiveIntensity = 1;
-          this.emissiveMap = null;
-          this.bumpMap = null;
-          this.bumpScale = 1;
-          this.normalMap = null;
-          this.normalMapType = TangentSpaceNormalMap;
-          this.normalScale = new Vector2(1, 1);
-          this.displacementMap = null;
-          this.displacementScale = 1;
-          this.displacementBias = 0;
-          this.roughnessMap = null;
-          this.metalnessMap = null;
-          this.alphaMap = null;
-          this.envMap = null;
-          this.envMapRotation = new Euler();
-          this.envMapIntensity = 1;
-          this.wireframe = false;
-          this.wireframeLinewidth = 1;
-          this.wireframeLinecap = "round";
-          this.wireframeLinejoin = "round";
-          this.flatShading = false;
-          this.fog = true;
-          this.setValues(parameters);
-        }
-        copy(source) {
-          super.copy(source);
-          this.defines = { "STANDARD": "" };
-          this.color.copy(source.color);
-          this.roughness = source.roughness;
-          this.metalness = source.metalness;
-          this.map = source.map;
-          this.lightMap = source.lightMap;
-          this.lightMapIntensity = source.lightMapIntensity;
-          this.aoMap = source.aoMap;
-          this.aoMapIntensity = source.aoMapIntensity;
-          this.emissive.copy(source.emissive);
-          this.emissiveMap = source.emissiveMap;
-          this.emissiveIntensity = source.emissiveIntensity;
-          this.bumpMap = source.bumpMap;
-          this.bumpScale = source.bumpScale;
-          this.normalMap = source.normalMap;
-          this.normalMapType = source.normalMapType;
-          this.normalScale.copy(source.normalScale);
-          this.displacementMap = source.displacementMap;
-          this.displacementScale = source.displacementScale;
-          this.displacementBias = source.displacementBias;
-          this.roughnessMap = source.roughnessMap;
-          this.metalnessMap = source.metalnessMap;
-          this.alphaMap = source.alphaMap;
-          this.envMap = source.envMap;
-          this.envMapRotation.copy(source.envMapRotation);
-          this.envMapIntensity = source.envMapIntensity;
-          this.wireframe = source.wireframe;
-          this.wireframeLinewidth = source.wireframeLinewidth;
-          this.wireframeLinecap = source.wireframeLinecap;
-          this.wireframeLinejoin = source.wireframeLinejoin;
-          this.flatShading = source.flatShading;
-          this.fog = source.fog;
-          return this;
         }
       };
       MeshDepthMaterial = class extends Material {
@@ -24945,11 +24869,14 @@ void main() {
     "src/static/js/photocube.js"() {
       init_three_module();
       init_OrbitControls();
-      var scene = new Scene();
-      var camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1e3);
       var canvas = document.getElementById("photocube");
+      var scene = new Scene();
+      var camera = new PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1e3);
+      camera.position.z = 5;
       var renderer = new WebGLRenderer({ canvas, alpha: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
+      var raycaster = new Raycaster();
+      var mouse = new Vector2();
       var light = new PointLight(16777215);
       light.position.set(0, 1.25, 3);
       scene.add(light);
@@ -24958,34 +24885,75 @@ void main() {
       scene.add(ambient);
       var geometry = new BoxGeometry(2.5, 3, 2.5);
       var loader = new TextureLoader();
-      var raycaster = new Raycaster();
-      var pointer = new Vector2();
       var cubeMaterials = [
-        new MeshStandardMaterial({ map: loader.load("/static/img/gleaners.jpeg"), side: DoubleSide }),
+        new MeshBasicMaterial({ map: loader.load("/static/img/gleaners.jpeg"), side: DoubleSide }),
         //right side
-        new MeshStandardMaterial({ map: loader.load("/static/img/teeball.jpg"), side: DoubleSide }),
+        new MeshBasicMaterial({ map: loader.load("/static/img/teeball.jpg"), side: DoubleSide }),
         //left side
-        new MeshStandardMaterial({ map: loader.load("/static/img/openmic.jpeg"), side: DoubleSide }),
+        new MeshBasicMaterial({ map: loader.load("/static/img/openmic.jpeg"), side: DoubleSide }),
         //top side
-        new MeshStandardMaterial({ map: loader.load("/static/img/skydive.png"), side: DoubleSide }),
+        new MeshBasicMaterial({ map: loader.load("/static/img/skydive.png"), side: DoubleSide }),
         //bottom side
-        new MeshStandardMaterial({ map: loader.load("/static/img/headshot.jpg"), side: DoubleSide }),
+        new MeshBasicMaterial({ map: loader.load("/static/img/headshot.jpg"), side: DoubleSide }),
         //front side
-        new MeshStandardMaterial({ map: loader.load("/static/img/yellerstone.jpg"), side: DoubleSide })
+        new MeshBasicMaterial({ map: loader.load("/static/img/yellerstone.jpg"), side: DoubleSide })
         //back side
       ];
       var cube = new Mesh(geometry, cubeMaterials);
-      cube.position.x = 5;
+      cube.position.x = 3;
       scene.add(cube);
       var controls = new OrbitControls(camera, renderer.domElement);
-      controls.minDistance = 3;
-      controls.maxDistance = 10;
-      controls.target.set(5, 0, 0);
+      controls.target.set(3, 0, 0);
+      controls.enableZoom = false;
+      controls.enablePan = false;
       controls.update();
       function animate() {
         renderer.render(scene, camera);
       }
       renderer.setAnimationLoop(animate);
+      var isEqualXYZ = (a, b) => {
+        return a.x === b.x && a.y === b.y && a.z === b.z;
+      };
+      var imgObj = [
+        {
+          name: "Me.",
+          normal: { x: 0, y: 0, z: -1 }
+        },
+        {
+          name: "I wasn't a fan of teeball.",
+          normal: { x: 1, y: 0, z: 0 }
+        },
+        {
+          name: "Me hiking in Yellowstone.",
+          normal: { x: 0, y: 0, z: 1 }
+        },
+        {
+          name: "Every year at Yazaki we volunteered at Gleaners to help set up their food drive.",
+          normal: { x: -1, y: 0, z: 0 }
+        },
+        {
+          name: "Entertaining the masses as the MC at an open mic. They weren't very entertained.",
+          normal: { x: 0, y: -1, z: 0 }
+        },
+        {
+          name: "Me skydiving. My goal is to get a license in the future.",
+          normal: { x: 0, y: 1, z: 0 }
+        }
+      ];
+      var description = document.getElementById("right-about-p");
+      window.addEventListener("mousemove", (event) => {
+        mouse.x = event.clientX / window.innerWidth * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(scene.children, true);
+        for (let i = 0; i < intersects.length; i++) {
+          for (let j = 0; j < imgObj.length; j++) {
+            if (isEqualXYZ(intersects[i].face.normal, imgObj[j].normal)) {
+              description.innerHTML = imgObj[j].name;
+            }
+          }
+        }
+      });
     }
   });
   require_photocube();
