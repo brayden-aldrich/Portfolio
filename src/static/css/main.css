@@ -202,3 +202,8 @@ footer a:hover {
     font-size: 2rem;
     margin: 0; 
 }
+
+#photosphere {
+    display: flex;
+    width: 25%;
+}
