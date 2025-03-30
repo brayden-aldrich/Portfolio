@@ -18,6 +18,6 @@ func main() {
 
 	log.Println("Starting server on http://localhost:4000/")
 
-	err := http.ListenAndServe(":4000", mux)
+	err := http.ListenAndServe("localhost:4000", mux)
 	log.Fatal(err)
 }

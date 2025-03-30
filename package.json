@@ -9,6 +9,7 @@
   "scripts": {
     "build": "esbuild src/static/js/holosphere.js src/static/js/photocube.js src/static/js/main.js --bundle --outdir=./src/public/ --minify",
     "watch": "esbuild src/static/js/holosphere.js src/static/js/photocube.js src/static/js/main.js --bundle --outdir=./src/public/ --watch --sourcemap",
+    "mobile": "ngrok http --url=growing-colt-loved.ngrok-free.app 4000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

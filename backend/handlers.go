@@ -17,6 +17,14 @@ type Work struct {
 	Technologies []string
 }
 
+type Project struct {
+	Name         string
+	Description  string
+	Company      string
+	Technologies []string
+	Link         string
+}
+
 var work = []Work{
 	{
 		Company:     "Yazaki North America",
@@ -74,7 +82,100 @@ var work = []Work{
 	},
 }
 
+var projects = []Project{
+
+	{
+		Name:        "Collaborative Note Taking App",
+		Description: "Capstone project created for Oregon State's security club. Real-time document editing, document publishing, and challenge tracking for CTF competitions. FOSS and self-hostable on low-end hardware.",
+		Company:     "Oregon State University",
+		Technologies: []string{
+			"Go",
+			"MySQL",
+			"SQLC",
+			"TypeScript",
+			"SvelteKit",
+			"Tailwind",
+			"Docker",
+		},
+		Link: "https://github.com/digitaldisarray/CTFCollab",
+	},
+	{
+		Name:        "This Portfolio",
+		Description: "Created and designed to showcase my abilities and experience. Utilizes Three.js and GLSL shaders, as well as Go templates.",
+		Company:     "Personal",
+		Technologies: []string{
+			"Go",
+			"Three.js",
+			"GLSL",
+		},
+		Link: "",
+	},
+	{
+		Name:        "Picnic Defenders",
+		Description: "Simple game where users needs to swat bugs before they reach the picnic. Our professor added it to his \"Hall of Fame\" site, which showcases the best final projects each semester.",
+		Company:     "Oregon State University",
+		Technologies: []string{
+			"Javascript",
+			"CSS",
+			"Node.js",
+		},
+		Link: "https://github.com/brayden-aldrich/picnic-defender",
+	},
+	{
+		Name:        "Mastermind MASM",
+		Description: "Mastermind created in Microsoft Macro Assembler (MASM)",
+		Company:     "Oregon State University",
+		Technologies: []string{
+			"MASM",
+		},
+		Link: "https://github.com/brayden-aldrich/Mastermind-Assembly",
+	},
+	{
+		Name:        "smallsh",
+		Description: "Bash shell implementation written in C in just 252 lines!",
+		Company:     "Oregon State University",
+		Technologies: []string{
+			"C",
+			"Bash",
+		},
+		Link: "https://github.com/brayden-aldrich/smallsh/blob/master/smallsh.c",
+	},
+	{
+		Name:        "User Permissions Matrix",
+		Description: "Application written to find a users permissions within PTC Integrity for the EI Software Department.",
+		Company:     "Yazaki NA",
+		Technologies: []string{
+			"Python",
+			"TKinter",
+			"PTC Integrity",
+		},
+		Link: "",
+	},
+	{
+		Name:        "Load Calculator",
+		Description: "Web app to help with the R & D intern team's project demo. Will show the users battery use per appliance, and determine the appropriate package on a speed-o-meter like animation.",
+		Company:     "Yazaki NA",
+		Technologies: []string{
+			"Javascript",
+			"CSS",
+			"HTML",
+		},
+		Link: "",
+	},
+}
+
 func home(w http.ResponseWriter, r *http.Request) {
+
+	psSet := make(map[string]bool)
+	pcString := []string{}
+	for i := 0; i < len(projects); i++ {
+		ps := psSet[projects[i].Company]
+		if !ps {
+			pcString = append(pcString, projects[i].Company)
+			psSet[projects[i].Company] = true
+		}
+	}
+
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
@@ -90,7 +191,12 @@ func home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = ts.ExecuteTemplate(w, "base", work)
+	err = ts.ExecuteTemplate(w, "base", map[string]interface{}{
+		"Work":             work,
+		"Projects":         projects,
+		"ProjectCompanies": pcString,
+	})
+
 	if err != nil {
 		log.Println(err.Error())
 		http.Error(w, "Internal server error", http.StatusInternalServerError)

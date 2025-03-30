@@ -43,51 +43,72 @@
         <section id="about">
             <p id="left-about-p">I'm a senior at Oregon State studying computer science. I love to build creative solutions and solve practical problems. 
                 My area of expertise is Full Stack Development,
-                and I have a personal interest in Audio and Graphics.</p>               .</p>
-            
+                and I have a personal interest in Audio and Graphics.</p>
             <canvas id="photocube"></canvas>
             <p id="right-about-p"></p>
             <a href="#work"><span></span></a>
         </section>
-       
-        <h1 id="work-left">Work</h1>
-        <div id="work">
-            {{ range .}}
-                <div id="company">
-                    <h1>{{.Company}}</h1>
-                    <ul id="work-list">
-                        <li id="role">{{.Role}}</li>
-                        <li id="department">{{.Department}}</li>
-                        <div>
-                            <h3>Description</h3>
-                            <li>{{.Description}}</li>
-                        </div>
-                        <div>
-                            <h3>Achievements</h3>
-                            {{range .Achievements}}
-                                <li class="achievements">{{.}}</li>
+        <div id="experience">
+
+            <div id="work">
+                <h1 id="work-left">Work</h1>
+                {{ range .Work}}
+                    <div id="company">
+                        <h1>{{.Company}}</h1>
+                        <p id="date">{{.Date}}</p>
+                        <ul id="work-list">
+                            <li id="role">{{.Role}}</li>
+                            <li id="department">{{.Department}}</li>
+                            <div>
+                                <h3>Description</h3>
+                                <li>{{.Description}}</li>
+                            </div>
+                            <div>
+                                <h3>Achievements</h3>
+                                {{range .Achievements}}
+                                    <li class="achievements">{{.}}</li>
+                                {{end}}
+                            </div>
+                            <div id="tech">
+                                <h3>Technologies</h3>
+                                {{range .Technologies}}
+                                    <div>{{.}}</div>
+                                {{end}}
+                            </div>
+                        </ul>
+                    </div>
+                {{end}}
+                
+            </div>
+            <div id="projects">
+                <h1 id="projects-right">Projects</h1>
+                <ul>
+                    {{range .ProjectCompanies}}
+                        <li>{{.}}</li>
+                    {{end}}
+                </ul>
+                {{ range .Projects }}
+                    <div id="project-card">
+                        <h1>
+                            {{if eq .Link ""}}
+                                {{.Name}}
+                            {{else}}
+                                <a href={{.Link}}>{{.Name}}</a>
                             {{end}}
-                        </div>
-                        <div>
-                            <h3>Technologies</h3>
-                            {{range .Technologies}}
-                                <li>{{.}}</li>
-                            {{end}}
-                        </div>
-                    </ul>
-                </div>
-            {{end}}
-            
-        </div>
-        <div id="projects">
-            <h1 id="projects-right">Projects</h1>
-        </div>
-        <div id="languages">
-            <h1 id="languages-right">Languages</h1>
+                        </h1>
+                        <h3>{{.Company}}</h3>
+                        <p>{{.Description}}</p>
+                       
+                        {{ range .Technologies}}
+                            <div>{{.}}</div>
+                        {{end}}
+        
+                    </div>
+                {{end}}
+            </div>
         </div>
         
-            <a href=""><span></span></a>
-        </div>
+
 
         
        
