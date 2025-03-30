@@ -49,19 +49,43 @@
             <p id="right-about-p"></p>
             <a href="#work"><span></span></a>
         </section>
-        <div id="experience">
-            <div id="work">
-                <h1 id="work-left">Work</h1>
-
-
-            </div>
-            <div id="projects">
-                <h1 id="projects-right">Projects</h1>
-            </div>
-            <div id="languages">
-                <h1 id="languages-right">Languages</h1>
-            </div>
+       
+        <h1 id="work-left">Work</h1>
+        <div id="work">
+            {{ range .}}
+                <div id="company">
+                    <h1>{{.Company}}</h1>
+                    <ul id="work-list">
+                        <li id="role">{{.Role}}</li>
+                        <li id="department">{{.Department}}</li>
+                        <div>
+                            <h3>Description</h3>
+                            <li>{{.Description}}</li>
+                        </div>
+                        <div>
+                            <h3>Achievements</h3>
+                            {{range .Achievements}}
+                                <li class="achievements">{{.}}</li>
+                            {{end}}
+                        </div>
+                        <div>
+                            <h3>Technologies</h3>
+                            {{range .Technologies}}
+                                <li>{{.}}</li>
+                            {{end}}
+                        </div>
+                    </ul>
+                </div>
+            {{end}}
             
+        </div>
+        <div id="projects">
+            <h1 id="projects-right">Projects</h1>
+        </div>
+        <div id="languages">
+            <h1 id="languages-right">Languages</h1>
+        </div>
+        
             <a href=""><span></span></a>
         </div>
 

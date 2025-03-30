@@ -140,7 +140,7 @@ function fragmentShader() {
                 vec3 ref = normalize(reflect(-Light, Normal));
                 float cosphi = dot(Eye, ref);
                 if(cosphi > 0.0)
-                s = pow(max(cosphi, 0.0), uShininess);
+                    s = pow(max(cosphi, 0.0), uShininess);
             }
             vec3 specular = uKs * s * SPECULARCOLOR;
             
@@ -203,7 +203,6 @@ class SphereObject {
             let n = new THREE.Vector3(0., 0., -1.)
             this.reflect(n)
         }
-        
     }
 
     reflect(normal){

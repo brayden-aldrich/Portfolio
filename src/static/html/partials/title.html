@@ -1,8 +1,9 @@
 {{define "title"}}
-    {{range .Titles}}
+    {{range .Title}}
         <li>{{.Role}}</li>
+        <li>{{.Department}}</li>
         <li>{{.Description}}</li>
         <li>{{.Achievements}}</li>
-        <li>{{.Languages}}</li>
+        <li>{{.Technologies}}</li>
     {{end}}
 {{end}}
