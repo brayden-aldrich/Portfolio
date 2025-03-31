@@ -175,7 +175,15 @@ func home(w http.ResponseWriter, r *http.Request) {
 			psSet[projects[i].Company] = true
 		}
 	}
-
+	wsSet := make(map[string]bool)
+	wcString := []string{}
+	for i := 0; i < len(work); i++ {
+		ws := wsSet[work[i].Company]
+		if !ws {
+			wcString = append(wcString, work[i].Company)
+			wsSet[work[i].Company] = true
+		}
+	}
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
@@ -195,6 +203,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		"Work":             work,
 		"Projects":         projects,
 		"ProjectCompanies": pcString,
+		"WorkCompanies":    wcString,
 	})
 
 	if err != nil {

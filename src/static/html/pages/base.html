@@ -11,6 +11,9 @@
         <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
         <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
         <script src="https://kit.fontawesome.com/0cdcaaf032.js" crossorigin="anonymous"></script>
+
+        
+
     </head>
     <body>
         
@@ -48,10 +51,20 @@
             <p id="right-about-p"></p>
             <a href="#work"><span></span></a>
         </section>
+
+
         <div id="experience">
 
             <div id="work">
-                <h1 id="work-left">Work</h1>
+                <div id="work-header">
+                    <h1 id="work-headline">Work</h1>
+                    <select name="work-companies-selection" id="work-companies-selection">
+                        {{range .WorkCompanies}}
+                            <option value="">All</option>
+                            <option value="{{.}}" id="{{.}}">{{.}}</option>
+                        {{end}}
+                    </select>
+                </div>
                 {{ range .Work}}
                     <div id="company">
                         <h1>{{.Company}}</h1>
@@ -69,8 +82,8 @@
                                     <li class="achievements">{{.}}</li>
                                 {{end}}
                             </div>
+                            <h3>Technologies</h3>
                             <div id="tech">
-                                <h3>Technologies</h3>
                                 {{range .Technologies}}
                                     <div>{{.}}</div>
                                 {{end}}
@@ -79,17 +92,23 @@
                     </div>
                 {{end}}
                 
+               
             </div>
             <div id="projects">
-                <h1 id="projects-right">Projects</h1>
-                <ul>
-                    {{range .ProjectCompanies}}
-                        <li>{{.}}</li>
-                    {{end}}
-                </ul>
+                <div id="projects-header">
+                    <h1 id="projects-headline">Projects</h1>
+                    <label for="companies-selection"></label>
+                    <select name="companies-selection" id="companies-selection">
+                        <option value="">All</option>
+                        {{range .ProjectCompanies}}
+                            <option value="{{.}}" id="{{.}}">{{.}}</option>
+                        {{end}}
+                    </select>
+                </div>
                 {{ range .Projects }}
-                    <div id="project-card">
-                        <h1>
+               
+                    <div id="{{.Company}}" class="project-card">
+                        <h1 class="project-name">
                             {{if eq .Link ""}}
                                 {{.Name}}
                             {{else}}
@@ -98,10 +117,12 @@
                         </h1>
                         <h3>{{.Company}}</h3>
                         <p>{{.Description}}</p>
-                       
-                        {{ range .Technologies}}
-                            <div>{{.}}</div>
-                        {{end}}
+                        <img src="/static/img/projects/mastermind.png">
+                        <div class="project-tech-list" id="project-tech-list-{{.Name}}">
+                            {{ range .Technologies}}
+                                <div class="project-tech">{{.}}</div>
+                            {{end}}
+                        </div>
         
                     </div>
                 {{end}}
@@ -113,10 +134,9 @@
         
        
         <footer>Powered by <a href='https://golang.org/'>Go</a> and <a href="https://threejs.org/">three.js</a></footer>
-        <script type="module" src="/public/main.js"></script>
         <script type="module" src="/public/holosphere.js"></script>
         <script type="module" src="/public/photocube.js"></script>
-        
+        <script type="module" src="/public/main.js"></script>
     </body>
 </html>
 {{end}}
