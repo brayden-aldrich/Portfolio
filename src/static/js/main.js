@@ -13,8 +13,3 @@ document.getElementById("companies-selection").addEventListener("change", (e)=>{
     }
 })
 
-
-// let projectCards = Array.from(document.getElementsByClassName("project-card"))
-// projectCards.forEach(i => { i.addEventListener("click", (e)=>{
-//     e
-// })})

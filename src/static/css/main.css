@@ -365,7 +365,12 @@ footer a:hover {
     color: #FFFFFF;
 }
 
-
+.project-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
 .project-tech-list {
     display: flex;
     flex-wrap: wrap;
@@ -373,6 +378,15 @@ footer a:hover {
     margin-top: auto;
 }
 
+
+.material-symbols-outlined {
+  
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+}
 
 #expand {
     width: 100vw;

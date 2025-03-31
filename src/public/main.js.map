@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["../static/js/main.js"],
-  "sourcesContent": ["document.getElementById(\"companies-selection\").addEventListener(\"change\", (e)=>{\r\n    let cards = document.getElementsByClassName(\"project-card\")\r\n    for(let i = 0; i < cards.length; i++){\r\n        cards[i].classList.remove(\"hidden\")\r\n    }\r\n    if(e.currentTarget.value === \"\"){\r\n        return;\r\n    } \r\n    for(let i = 0; i < cards.length; i++){\r\n        if(cards[i].id !== e.currentTarget.value){\r\n            cards[i].classList.add(\"hidden\")\r\n        }\r\n    }\r\n})\r\n\r\n\r\n// let projectCards = Array.from(document.getElementsByClassName(\"project-card\"))\r\n// projectCards.forEach(i => { i.addEventListener(\"click\", (e)=>{\r\n//     e\r\n// })})"],
+  "sourcesContent": ["document.getElementById(\"companies-selection\").addEventListener(\"change\", (e)=>{\r\n    let cards = document.getElementsByClassName(\"project-card\")\r\n    for(let i = 0; i < cards.length; i++){\r\n        cards[i].classList.remove(\"hidden\")\r\n    }\r\n    if(e.currentTarget.value === \"\"){\r\n        return;\r\n    } \r\n    for(let i = 0; i < cards.length; i++){\r\n        if(cards[i].id !== e.currentTarget.value){\r\n            cards[i].classList.add(\"hidden\")\r\n        }\r\n    }\r\n})\r\n\r\n"],
   "mappings": ";;;;;;;AAAA;AAAA;AAAA,eAAS,eAAe,qBAAqB,EAAE,iBAAiB,UAAU,CAAC,MAAI;AAC3E,YAAI,QAAQ,SAAS,uBAAuB,cAAc;AAC1D,iBAAQ,IAAI,GAAG,IAAI,MAAM,QAAQ,KAAI;AACjC,gBAAM,CAAC,EAAE,UAAU,OAAO,QAAQ;AAAA,QACtC;AACA,YAAG,EAAE,cAAc,UAAU,IAAG;AAC5B;AAAA,QACJ;AACA,iBAAQ,IAAI,GAAG,IAAI,MAAM,QAAQ,KAAI;AACjC,cAAG,MAAM,CAAC,EAAE,OAAO,EAAE,cAAc,OAAM;AACrC,kBAAM,CAAC,EAAE,UAAU,IAAI,QAAQ;AAAA,UACnC;AAAA,QACJ;AAAA,MACJ,CAAC;AAAA;AAAA;",
   "names": []
 }
