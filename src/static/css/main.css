@@ -16,11 +16,17 @@ html, body {
 #home {
     font-family: 'Inter', sans-serif;
     background: rgb(255,255,255);
-    background: 
-        radial-gradient(circle at center, rgba(255,255,255,1), rgba(174,211,255,.1) 50%) center;
+    background: linear-gradient(white, rgba(174, 210, 255, 1), rgb(37, 45, 54));
 
 }
 
+#about  {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(rgb(37, 45, 54), rgba(174, 210, 255, 1));
+    /* background: 
+        radial-gradient(circle at center, rgba(174,211,255,.1), rgb(37, 45, 54) 50%) center; */
+    display: flex;
+}
 
 section {
     position: relative;
@@ -181,13 +187,7 @@ footer a:hover {
     position: absolute;
 }
 
-#about  {
-    font-family: 'Inter', sans-serif;
-    background: rgb(37, 45, 54);
-    background: 
-        radial-gradient(circle at center, rgba(174,211,255,.1), rgb(37, 45, 54) 50%) center;
-    display: flex;
-}
+
 #neg-holo-render {
     position: absolute;
     z-index: -1;
