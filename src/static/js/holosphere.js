@@ -1,7 +1,8 @@
 import * as THREE from 'three';
-import * as CANNON from 'cannon-es'
 
 const scene = new THREE.Scene();
+const negScene = new THREE.Scene();
+
 
 const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
 
@@ -9,6 +10,9 @@ let canvas = document.getElementById("holo-render")
 const renderer = new THREE.WebGLRenderer({canvas: canvas, alpha: true});
 renderer.setSize( window.innerWidth, window.innerHeight );
 
+let negCanvas = document.getElementById("neg-holo-render")
+const negRenderer = new THREE.WebGLRenderer({canvas: negCanvas, alpha: true});
+negRenderer.setSize( window.innerWidth, window.innerHeight );
 
 camera.position.z = 6;
 const vFOV = (camera.fov * Math.PI) / 180;
@@ -35,6 +39,30 @@ function createHolographicMaterial(spacing, grating) {
         uniforms: uniforms,
         vertexShader: vertexShader(),
         fragmentShader: fragmentShader(),
+        lights: true
+    });
+
+    return material;
+}
+function createNegatedHolographicMaterial(spacing, grating) {
+    const uniforms = THREE.UniformsUtils.merge([
+        THREE.UniformsLib.lights, 
+        {
+            uTol: { value: 0.1 },
+            uKa: { value: 0.8 },
+            uKd: { value: 0.9 },
+            uKs: { value: 1.3 },
+            uShininess: { value: 10.0 },
+            uSpacing: { value: spacing },
+            uGratingFreq: { value: 1. }
+        }
+    ]);
+
+    // material for shaders
+    const material = new THREE.ShaderMaterial({
+        uniforms: uniforms,
+        vertexShader: vertexShader(),
+        fragmentShader: negFragmentShader(),
         lights: true
     });
 
@@ -129,6 +157,7 @@ function fragmentShader() {
             float diffraction = abs(cosI - cosR);
             
             float wavelength = uGratingFreq * diffraction / uSpacing;
+            
             vec3 diffractionColor = Rainbow(wavelength);
             
             vec3 ambient = uKa * myColor;
@@ -146,7 +175,7 @@ function fragmentShader() {
             
             // Fresnel calculation for holographic effect intensity
             float fresnelFactor = pow(1.0 - max(0.0, dot(Eye, Normal)), 1.5);
-            float diffractionVisibility = smoothstep(0.0, 1.0, diffraction);
+            float dv = smoothstep(0.0, 1.0, diffraction);
             
             vec3 finalColor = mix(
                 ambient + diffuse,
@@ -158,21 +187,120 @@ function fragmentShader() {
         }
     `;
 }
+function negFragmentShader() {
+    return `
+        varying vec2 vST;
+        varying vec3 vN;
+        varying vec3 vL;
+        varying vec3 vE;
+        varying vec3 vMC;
+
+        uniform float uTol;
+        uniform float uKa;
+        uniform float uKd;
+        uniform float uKs;
+        uniform float uShininess;
+        uniform float uSpacing;
+        uniform float uGratingFreq;
+
+        const vec3 OBJECTCOLOR = vec3(.0, .0, .0);
+        const vec3 SPECULARCOLOR = vec3(1.0, 1.0, 1.0);
+
+        vec3 Rainbow(float t) {
+            t = clamp(t, 0.0, 1.0);
+            vec3 rgb = vec3(0.0, 0.0, 0.0);
+            
+            // b -> c
+            if(t >= 0.0) {
+                rgb.g = 4.0 * (t - (0.0/4.0));
+                rgb.b = 1.0;
+            }
+            
+            // c -> g
+            if(t >= (1.0/4.0)) {
+                rgb.g = 1.0;
+                rgb.b = 1.0 - 4.0 * (t - (1.0/4.0));
+            }
+            
+            // g -> y
+            if(t >= (2.0/4.0)) {
+                rgb.r = 4.0 * (t - (2.0/4.0));
+                rgb.g = 1.0;
+            }
+            
+            // y -> r
+            if(t >= (3.0/4.0)) {
+                rgb.r = 1.0;
+                rgb.g = 1.0 - 4.0 * (t - (3.0/4.0));
+            }
+            
+            return rgb;
+        }
+
+        void main() {
+            vec3 myColor = OBJECTCOLOR;
+            vec2 st = vST;
+            vec3 Normal = normalize(vN);
+            vec3 Light = normalize(vL);
+            vec3 Eye = normalize(vE);
+            
+            vec3 Tangent = normalize(dFdx(vMC));
+            
+            float cosI = dot(Light, Tangent);
+            float cosR = dot(Eye, -Tangent);
+            float diffraction = abs(cosI - cosR);
+            
+            float wavelength = uGratingFreq * diffraction / uSpacing;
+            
+            vec3 diffractionColor = Rainbow(wavelength);
+            
+            vec3 ambient = uKa * myColor;
+            float d_light = max(dot(Normal, Light), uTol);
+            vec3 diffuse = uKd * d_light * myColor;
+            
+            float s = 0.0;
+            if(d_light > 0.0) {
+                vec3 ref = normalize(reflect(-Light, Normal));
+                float cosphi = dot(Eye, ref);
+                if(cosphi > 0.0)
+                    s = pow(max(cosphi, 0.0), uShininess);
+            }
+            vec3 specular = uKs * s * SPECULARCOLOR;
+            
+            // Fresnel calculation for holographic effect intensity
+            float fresnelFactor = pow(1.0 - max(0.0, dot(Eye, Normal)), 1.5);
+            float dv = smoothstep(0.0, 1.0, diffraction);
+            
+            vec3 finalColor = mix(
+                ambient + diffuse,
+                diffractionColor,
+                fresnelFactor * diffraction * .5
+            ) + specular;
+            
+            gl_FragColor = vec4(1. - finalColor, .5);
+        }
+    `;
+}
+
+
+
 let SphereArray = []
+
 class SphereObject {
     
-    constructor(sphere, boundary, x, y, z, sx, sy, sz){
+    constructor(sphere, sphereNeg, boundary, x, y, z, sx, sy, sz){
         this.sphere = sphere
         this.boundary = boundary
+        this.sphereNeg = sphereNeg
         this.x = x
         this.y = y
         this.z = z
         this.sx = sx
         this.sy = sy
         this.sz = sz
-    }
 
-    
+       
+    }
 
     increment(){
         this.x += this.sx
@@ -220,14 +348,16 @@ class SphereObject {
         this.sphere.position.y = this.y
         this.sphere.position.z = this.z
         this.boundary.center.set(this.x, this.y, this.z);
-    }
+        this.sphereNeg.position.x = this.x
+        this.sphereNeg.position.y = this.y
+        this.sphereNeg.position.z = this.z
+    }    
 
-    
-
+  
 }
 
 
-const createSphere = () => {
+const createSphere = (aspect) => {
     let s = [0., 0., 0.]
     for (let i = 0; i < s.length; i++) {
         s[i] = parseFloat((Math.random() * 0.02)) * (Math.round(Math.random()) ? 1 : -1)
@@ -247,28 +377,52 @@ const createSphere = () => {
     let grating = (Math.random() * 10 + 1) + 1
 
 
-    const geometry = new THREE.SphereGeometry( .5, 128, 128 )
-    const holoMaterial = new createHolographicMaterial(spacing, grating)
+    const geometry = new THREE.SphereGeometry( radius, 128, 128 )
     
-    holoMaterial.flatShading = false; 
-    const sphere = new THREE.Mesh( geometry, holoMaterial )
+
+    const materialNeg = new createNegatedHolographicMaterial(spacing, grating)
+
+    const materialReg = new createHolographicMaterial(spacing, grating)
+ 
+
+    
+    materialReg.flatShading = false; 
+    const sphere = new THREE.Mesh( geometry, materialReg )
     const boundingSphere = new THREE.Sphere(sphere.position, radius)
 
-    return new SphereObject(sphere, boundingSphere, x, y, z, s[0], s[1], s[2])
+    materialNeg.flatShading = false; 
+    const sphereNeg = new THREE.Mesh( geometry, materialNeg )
+
+
+
+    return new SphereObject(sphere, sphereNeg, boundingSphere, x, y, z, s[0], s[1], s[2])
 
 }
 
-for(let i = 0; i < 20; i++){
-    SphereArray.push(createSphere())
-    scene.add( SphereArray[i].sphere )
+const SceneManager = {
+    currentScene: 'home',
+    init(){
+        for(let i = 0; i < 20; i++){
+            SphereArray.push(createSphere(window.innerHeight / window.innerWidth))
+            scene.add( SphereArray[i].sphere )
+            negScene.add( SphereArray[i].sphereNeg )
+            
+        }        
+    },
+    
 }
 
+SceneManager.init()
 
 
 function animate()
 {
+
+    
     renderer.render( scene, camera );
+    negRenderer.render( negScene, camera );
     for(let i = 0; i < SphereArray.length; i++){
+        
         SphereArray[i].increment()
         SphereArray[i].setPosition()
         for(let j = i + 1; j < SphereArray.length; j++){
@@ -321,9 +475,19 @@ function animate()
                       s2.setPosition();
                   }
               }
+              
         }
+       
     }
     
 }
 renderer.setAnimationLoop( animate );
+negRenderer.setAnimationLoop( animate );
 
+
+window.addEventListener('resize', (e)=>{
+    let SphereArray = null
+
+    SceneManager.init()
+
+})

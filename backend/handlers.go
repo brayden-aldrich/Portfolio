@@ -143,7 +143,7 @@ var projects = []Project{
 	{
 		Name:        "User Permissions Matrix",
 		Description: "Application written to find a users permissions within PTC Integrity for the EI Software Department.",
-		Company:     "Yazaki NA",
+		Company:     "Yazaki North America",
 		Technologies: []string{
 			"Python",
 			"TKinter",
@@ -154,7 +154,7 @@ var projects = []Project{
 	{
 		Name:        "Load Calculator",
 		Description: "Web app to help with the R & D intern team's project demo. Will show the users battery use per appliance, and determine the appropriate package on a speed-o-meter like animation.",
-		Company:     "Yazaki NA",
+		Company:     "Yazaki North America",
 		Technologies: []string{
 			"Javascript",
 			"CSS",

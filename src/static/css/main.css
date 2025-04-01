@@ -17,7 +17,7 @@ html, body {
     font-family: 'Inter', sans-serif;
     background: rgb(255,255,255);
     background: 
-        radial-gradient(circle at center, rgba(174,211,255,1), rgba(255,255,255,1) 50%) center;
+        radial-gradient(circle at center, rgba(255,255,255,1), rgba(174,211,255,.1) 50%) center;
 
 }
 
@@ -182,47 +182,37 @@ footer a:hover {
 }
 
 #about  {
+    font-family: 'Inter', sans-serif;
+    background: rgb(37, 45, 54);
     background: 
-        radial-gradient(circle at left, rgba(174,211,255,1), rgba(255,255,255,1) 50%) center;
+        radial-gradient(circle at center, rgba(174,211,255,.1), rgb(37, 45, 54) 50%) center;
     display: flex;
 }
-
-
-#left-about-p {
-    display: block;
-    width: 25%;
-    max-width: 25%;
-    height: 50vh;
-    align-items: center;
-    align-content: center;
-    color: rgb(34, 40, 45);
-    text-align: left; 
+#neg-holo-render {
     position: absolute;
-    padding: 1.5vw;
+    z-index: -1;
+}
+
+#about-p {
+    margin: auto;
+    width: 50%;
     
-    top: 25vh; 
-    left: 0; 
-    font-size: 2rem;
-    margin: 0; 
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 25px;
+    font-size: 1.25rem;
+    color: rgb(34, 40, 45);
+    z-index: 1
 }
 
 
-#right-about-p {
-    display: block;
-    width: 25%;
-    max-width: 25%;
-    height: 50vh;
-    align-items: center;
-    align-content: center;
-    color: rgb(34, 40, 45);
-    text-align: right; 
-    position: absolute;
-    padding: 1.5vw;
-    
-    top: 25vh; 
-    right: 0; 
-    font-size: 2rem;
-    margin: 0; 
+#experience {
+    padding-top: 4.5vh;
+    background: 
+        radial-gradient(circle at right, rgba(174,211,255,1), rgba(255,255,255,1) 35%) center;
 }
 
 #work {
@@ -304,6 +294,9 @@ footer a:hover {
 #projects {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: row; 
+    justify-content: start;
+    align-items: start;
     gap: 1rem; 
     
 }
@@ -312,7 +305,8 @@ footer a:hover {
     display: flex;
     flex-direction: column;
     width: 400px; 
-    min-height: 250px; 
+    min-height: 450px; 
+    max-height: 450px; 
     border: 2px solid rgb(34, 40, 45);
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
