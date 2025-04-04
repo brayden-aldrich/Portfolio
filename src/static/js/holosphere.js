@@ -22,7 +22,6 @@ function setupRenderer(){
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     isMobile = window.innerWidth < 1000;
-    const aspect = window.innerWidth / window.innerHeight
 
     const fov = isMobile ? 40 : 70
 
@@ -284,7 +283,7 @@ const createSphere = () => {
     let z = (Math.random() * (4.0000 + 0.0000) + 0.0000)
     z *= Math.round(Math.random()) ? 1 : -1
     const radius = isMobile ? 0.2 : 0.5;
-    const segments = isMobile ? 32 : 64;    
+    const segments = isMobile ? 32 : 128;    
     let spacing = (Math.random() * 10 + 1) + 1
     let grating = (Math.random() * 10 + 1) + 1
 
@@ -404,7 +403,7 @@ function animate(time)
 renderer.setAnimationLoop( animate );
 initApp()
 setupRenderer();
-// let resizeTimeout;
+let resizeTimeout;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
    

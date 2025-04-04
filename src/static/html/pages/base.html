@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     </head>
     <body>
-        <nav id="mobile-nav">
+        <!-- <nav id="mobile-nav">
 
             <i class="material-symbols-outlined mob-nav-burger">
                 menu
@@ -27,8 +27,8 @@
                 <li><a href="#experience">experience</a></li>
                 <li><a href="#resume">resume</a></li>
             </ul>
-        </nav>
-        <!-- <nav id="desktop" clas="hidden">
+        </nav> -->
+        <nav id="desktop" clas="hidden">
             <div class="navleft">
                 <a href="#home">Home</a> 
                 <a href="#about">About</a>
@@ -39,7 +39,7 @@
                 <a href="https://github.com/brayden-aldrich" target="_blank"><i class="fa-brands fa-github" id="github-icon"></i></a>
                 <a href="https://www.linkedin.com/in/braydenaldrich/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
             </div>
-        </nav> -->
+        </nav>
         <div id="threejs-home-about">
             <canvas id="holo-render"></canvas>
 
@@ -84,24 +84,30 @@
                         {{end}}
                     </select>
                 </div>
+               
+                {{ $idx := 0 }}
+                {{$prevComp := ""}}
                 {{ range .Work}}
+                    {{$currComp := .Company}}
                     <div id="company">
-                        <h1>{{.Company}}</h1>
-                        <p id="date">{{.Date}}</p>
+                        {{ if eq $idx 0}}
+                            <h1 id="company-headline">{{.Company}}</h1>
+                        {{ else if ne $currComp $prevComp}}
+                            <h1 id="company-headline">{{$currComp}}</h1>
+                        {{ end }}
                         <ul id="work-list">
-                            <li id="role">{{.Role}}</li>
                             <li id="department">{{.Department}}</li>
-                            <div>
-                                <h3>Description</h3>
-                                <li>{{.Description}}</li>
-                            </div>
-                            <div>
-                                <h3>Achievements</h3>
+                            <li id="role">{{.Role}}</li>
+                            <p id="date">{{.Date}}</p>
+                           
+                                <li class="description">{{.Description}}</li>
+                            
+                                <h3 class="achievements-h3">Achievements</h3>
                                 {{range .Achievements}}
                                     <li class="achievements">{{.}}</li>
                                 {{end}}
-                            </div>
-                            <h3>Technologies</h3>
+                           
+                            <h3 class="tech-h3">Technologies</h3>
                             <div id="tech">
                                 {{range .Technologies}}
                                     <div>{{.}}</div>
@@ -109,6 +115,9 @@
                             </div>
                         </ul>
                     </div>
+                    
+                    {{- $prevComp = $currComp -}}
+                    {{- $idx = increment $idx -}}
                 {{end}}
                 
                
@@ -125,8 +134,9 @@
                         {{end}}
                     </select>
                 </div>
+             
                 {{ range .Projects }}
-               
+                  
                     <div id="{{.Company}}" class="project-card">
                         <div class="project-card-header">
 

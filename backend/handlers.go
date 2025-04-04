@@ -29,19 +29,22 @@ type Project struct {
 
 var work = []Work{
 	{
+
 		Company:     "Yazaki North America",
 		Role:        "Software Engineer Intern",
-		Department:  "EI Software BU",
-		Description: "Worked in a Scrum team with other interns to create apps and process improvements for the business unit.",
-		Date:        "June 2022 - September 2022",
+		Department:  "Stellantis BU",
+		Description: "In my last internship, I dove heavily into manipulating and displaying data pertaining to both products and engineering. I created 6 macros, saving hundreds of hours of work in total, in three seperate divisions within the business unit. In the ever increasing automotive crunch, this allows engineers to focus on creating better end products. I was also lucky to expand beyond the walls of Stellantis and create a web application that was used in a fellow intern teams demo to upper management.",
+		Date:        "June 2024 - September 2024",
 		Achievements: []string{
-			"Proved Pythons use case by creating an application to interface with PTC Integrity",
-			"Revived the asset management project and compiled all asset sources into a proven data type within PTC Integrity",
+			"Created six sustainable macros that will save dozens of hours of work, having never coded in VBA before.",
+			"Created a Load Calculator web application for the R & D Intern teams project showcase, with all animations and functionalities written in vanilla JavaScript.",
 		},
 		Technologies: []string{
-			"Python",
+			"Visual Basic",
 			"Excel",
-			"PTC Integrity",
+			"Javascript",
+			"CSS",
+			"HTML",
 		},
 		Link: "https://www.yazaki-na.com/",
 	},
@@ -50,7 +53,7 @@ var work = []Work{
 		Company:     "Yazaki North America",
 		Role:        "Software Engineer Intern",
 		Department:  "GM BU",
-		Description: "Worked alongside an engineering team to build an Excel plugin and a DLL for engineering efficiency.",
+		Description: "For my second internship, I was focused on two products: a JSON DLL for Siemens ModularXC, and an all inclusive macro, a rewrite of a previous macro but in C# for better performance. I was able to explore the C# ecosystem for the first time, and build the groundwork for a sustainable solution. This is the first time I dealt with requirements and timelines, and I gained considerable experiences in both my successes and failures.",
 		Date:        "June 2023 - September 2023",
 		Achievements: []string{
 			"Created an Excel plugin and DLL using C#, having never used the language before.",
@@ -63,22 +66,19 @@ var work = []Work{
 		Link: "https://www.yazaki-na.com/",
 	},
 	{
-
 		Company:     "Yazaki North America",
 		Role:        "Software Engineer Intern",
-		Department:  "Stellantis BU",
-		Description: "Automation engineer creating plugins and macros to improve efficiency and workflow of wiring harness engineering.",
-		Date:        "June 2024 - September 2024",
+		Department:  "EI Software BU",
+		Description: "In my first internship, I worked alongside 3 other interns in a Scrum team within the EI Software department. This was my first introduction to Scrum, as well as working in a professional environment -- the closest I got until then was commercial cleaning in an office building. I was able to prove the use case of Python for the head of the department by building a Python app plus a GUI to interface with PTC Integrity, a version control manager. I also helped bring back the asset control project, where I dove into the data analysis lifecycle for the first time: compiling and cleaning data.",
+		Date:        "June 2022 - September 2022",
 		Achievements: []string{
-			"Created six sustainable macros that will save dozens of hours of work, having never coded in VBA before.",
-			"Created a Load Calculator web application for the R & D Intern teams project showcase, with all animations and functionalities written in vanilla JavaScript.",
+			"Proved Pythons use case by creating an application to interface with PTC Integrity",
+			"Revived the asset management project and compiled all asset sources into a proven data type within PTC Integrity",
 		},
 		Technologies: []string{
-			"Visual Basic",
+			"Python",
 			"Excel",
-			"Javascript",
-			"CSS",
-			"HTML",
+			"PTC Integrity",
 		},
 		Link: "https://www.yazaki-na.com/",
 	},
@@ -191,6 +191,12 @@ var projects = []Project{
 	},
 }
 
+var funcMap = template.FuncMap{
+	"increment": func(x int) int {
+		return x + 1
+	},
+}
+
 func home(w http.ResponseWriter, r *http.Request) {
 
 	psSet := make(map[string]bool)
@@ -219,7 +225,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		"./src/static/html/pages/base.html",
 	}
 
-	ts, err := template.ParseFiles(files...)
+	ts, err := template.New("base.html").Funcs(funcMap).ParseFiles(files...)
 	if err != nil {
 		log.Println(err.Error())
 		http.Error(w, "Internal server error", http.StatusInternalServerError)

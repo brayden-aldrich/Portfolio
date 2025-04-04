@@ -23779,7 +23779,7 @@ void main() {
         let z = Math.random() * (4 + 0) + 0;
         z *= Math.round(Math.random()) ? 1 : -1;
         const radius = isMobile ? 0.2 : 0.5;
-        const segments = isMobile ? 32 : 64;
+        const segments = isMobile ? 32 : 128;
         let spacing = Math.random() * 10 + 1 + 1;
         let grating = Math.random() * 10 + 1 + 1;
         const geometry = new SphereGeometry(radius, segments, segments);
@@ -23862,6 +23862,7 @@ void main() {
       renderer.setAnimationLoop(animate);
       initApp();
       setupRenderer();
+      var resizeTimeout;
       window.addEventListener("resize", () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
