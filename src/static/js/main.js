@@ -56,3 +56,9 @@ expandButtons.forEach((i) =>{
 })
 
 
+let nav = document.getElementsByClassName("mob-nav-burger")
+nav[0].addEventListener("click", (e)=>{
+    let nav = document.getElementById("navlist")
+    nav.classList.toggle("expand-nav-burger")
+    nav.classList.toggle("collapse-nav-burger")
+})

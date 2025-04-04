@@ -23553,15 +23553,15 @@ void main() {
       var width = height * camera.aspect;
       function setupRenderer() {
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         isMobile = window.innerWidth < 1e3;
         const aspect2 = window.innerWidth / window.innerHeight;
-        const fov2 = isMobile ? 40 : 50;
-        camera.aspect = width / height;
+        const fov2 = isMobile ? 40 : 70;
+        camera.aspect = window.innerWidth / window.innerHeight / 2;
         camera.fov = fov2;
         const vFOV2 = camera.fov * Math.PI / 180;
         height = 2 * Math.tan(vFOV2 / 2) * Math.abs(camera.position.z);
-        width = height * aspect2;
+        width = height * 0.5;
         camera.updateProjectionMatrix();
       }
       camera.position.z = 6;
@@ -23726,7 +23726,7 @@ void main() {
           if (this.x >= width - this.boundary.radius) {
             let n = new Vector3(1, 0, 0);
             this.reflect(n);
-          } else if (this.x <= width * -1 + 2) {
+          } else if (this.x <= -width + this.boundary.radius) {
             let n = new Vector3(-1, 0, 0);
             this.reflect(n);
           }
@@ -23734,7 +23734,7 @@ void main() {
           if (this.y >= height - this.boundary.radius) {
             let n = new Vector3(0, 1, 0);
             this.reflect(n);
-          } else if (this.y <= -height - this.boundary.radius) {
+          } else if (this.y <= -height + this.boundary.radius) {
             let n = new Vector3(0, -1, 0);
             this.reflect(n);
           }
@@ -23786,21 +23786,23 @@ void main() {
         const materialReg = new createHolographicMaterial(spacing, grating);
         materialReg.flatShading = false;
         const sphere = new Mesh(geometry, materialReg);
+        sphere.scale.set(1, 1, 1);
         const boundingSphere = new Sphere(sphere.position, radius);
         return new SphereObject(sphere, boundingSphere, x, y, z, s[0], s[1], s[2]);
       };
       var SceneManager = {
         currentScene: "home",
         init(isMobile2) {
-          SphereArray.forEach((s) => null);
-          for (let i = 0; i < 20; i++) {
+          for (let i = 0; i < 25; i++) {
             SphereArray.push(createSphere(isMobile2));
             scene.add(SphereArray[i].sphere);
           }
         }
       };
-      function init() {
+      function initApp() {
         setupRenderer();
+        SphereArray.forEach((s) => scene.remove(s.sphere));
+        SphereArray = [];
         SceneManager.init();
       }
       var lastTime = 0;
@@ -23819,8 +23821,7 @@ void main() {
             const distanceVec = pos1.clone().sub(pos2);
             const distance = distanceVec.length();
             const minDistance = s1.boundary.radius + s2.boundary.radius;
-            const epsilon = 1e-3;
-            if (distance < minDistance - epsilon) {
+            if (distance < minDistance) {
               const penetrationDepth = minDistance - distance;
               const normal = distanceVec.normalize();
               const vel1 = new Vector3(s1.sx, s1.sy, s1.sz);
@@ -23859,8 +23860,8 @@ void main() {
         }
       }
       renderer.setAnimationLoop(animate);
-      init();
-      var resizeTimeout;
+      initApp();
+      setupRenderer();
       window.addEventListener("resize", () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {

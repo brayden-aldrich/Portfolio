@@ -20,20 +20,20 @@ let width = height * camera.aspect;
 
 function setupRenderer(){
     renderer.setSize( window.innerWidth, window.innerHeight );
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     isMobile = window.innerWidth < 1000;
     const aspect = window.innerWidth / window.innerHeight
 
-    const fov = isMobile ? 40 : 50
+    const fov = isMobile ? 40 : 70
 
-    camera.aspect = width / height;
+    camera.aspect = window.innerWidth / window.innerHeight / 2;
     camera.fov = fov;
     const vFOV = (camera.fov * Math.PI) / 180;
     height = 2 * Math.tan(vFOV / 2) * Math.abs(camera.position.z);
-    width = height * aspect;
+    width = height * .5;
     camera.updateProjectionMatrix();
 
-
+   
 }
 camera.position.z = 6;
 
@@ -215,8 +215,7 @@ class SphereObject {
             
             let n = new THREE.Vector3(1., 0., 0.)
             this.reflect(n)
-        } else if(this.x <= ((width * -1) + 2)){
-            
+        } else if(this.x <= -width + this.boundary.radius){
             let n = new THREE.Vector3(-1., 0., 0.)
             this.reflect(n)
         }
@@ -225,7 +224,7 @@ class SphereObject {
         if(this.y >= (height - this.boundary.radius)){
             let n = new THREE.Vector3(0., 1., 0.)
             this.reflect(n)
-        } else if(this.y <= -height- this.boundary.radius){
+        } else if(this.y <= -height + this.boundary.radius){
             let n = new THREE.Vector3(0., -1., 0.)
             this.reflect(n)
         }
@@ -300,8 +299,8 @@ const createSphere = () => {
     
     materialReg.flatShading = false; 
     const sphere = new THREE.Mesh( geometry, materialReg )
+    sphere.scale.set(1, 1, 1);
     const boundingSphere = new THREE.Sphere(sphere.position, radius)
-
 
 
 
@@ -313,8 +312,8 @@ const createSphere = () => {
 const SceneManager = {
     currentScene: 'home',
     init(isMobile){
-        SphereArray.forEach(s => null)
-        for(let i = 0; i < 20; i++){
+        // SphereArray.forEach(s => null)
+        for(let i = 0; i < 25; i++){
             SphereArray.push(createSphere(isMobile))
             scene.add( SphereArray[i].sphere )
             
@@ -322,9 +321,11 @@ const SceneManager = {
     },
    
 }
-function init(){
+function initApp(){
     setupRenderer()
-    SceneManager.init()
+    SphereArray.forEach(s => scene.remove(s.sphere));
+    SphereArray = [];
+    SceneManager.init();
 }
 
 let lastTime = 0
@@ -348,8 +349,8 @@ function animate(time)
               const distance = distanceVec.length();
               
               const minDistance = s1.boundary.radius + s2.boundary.radius;
-              const epsilon = 0.001
-              if (distance < minDistance - epsilon) {
+              
+              if (distance < minDistance) {
                   const penetrationDepth = minDistance - distance;
                   
                   const normal = distanceVec.normalize();
@@ -401,11 +402,12 @@ function animate(time)
     
 }
 renderer.setAnimationLoop( animate );
-
-init()
-let resizeTimeout;
+initApp()
+setupRenderer();
+// let resizeTimeout;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
+   
     resizeTimeout = setTimeout(() => {
         setupRenderer();
     }, 200);

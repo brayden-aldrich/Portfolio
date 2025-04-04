@@ -54,6 +54,12 @@
           }
         });
       });
+      var nav = document.getElementsByClassName("mob-nav-burger");
+      nav[0].addEventListener("click", (e) => {
+        let nav2 = document.getElementById("navlist");
+        nav2.classList.toggle("expand-nav-burger");
+        nav2.classList.toggle("collapse-nav-burger");
+      });
     }
   });
   require_main();
