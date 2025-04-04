@@ -20,7 +20,7 @@ let width
 
 function setupRenderer(){
     renderer.setSize( window.innerWidth, window.innerHeight );
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.max(window.devicePixelRatio, 2));
     isMobile = window.innerWidth < 1000;
 
     const fov = isMobile ? 40 : 70

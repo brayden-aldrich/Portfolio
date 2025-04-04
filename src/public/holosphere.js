@@ -23552,7 +23552,7 @@ void main() {
       var width;
       function setupRenderer() {
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setPixelRatio(Math.max(window.devicePixelRatio, 2));
         isMobile = window.innerWidth < 1e3;
         const fov2 = isMobile ? 40 : 70;
         camera.position.z = 7;
