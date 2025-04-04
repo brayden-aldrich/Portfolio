@@ -16,8 +16,8 @@ func main() {
 
 	mux.HandleFunc("/", home)
 
-	log.Println("Starting server on http://localhost:4040/")
+	log.Println("Starting server on http://localhost:4000/")
 
-	err := http.ListenAndServe("localhost:4040", mux)
+	err := http.ListenAndServe("localhost:4000", mux)
 	log.Fatal(err)
 }

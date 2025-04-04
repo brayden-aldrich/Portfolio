@@ -1,24 +1,42 @@
 import * as THREE from 'three';
 
 const scene = new THREE.Scene();
-const negScene = new THREE.Scene();
+// const negScene = new THREE.Scene();
 
 
-const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
+const camera = new THREE.PerspectiveCamera( 60,  1, 1, 500 );
 
 let canvas = document.getElementById("holo-render")
-const renderer = new THREE.WebGLRenderer({canvas: canvas, alpha: true});
-renderer.setSize( window.innerWidth, window.innerHeight );
+const renderer = new THREE.WebGLRenderer({canvas: canvas, alpha: true, antialias: true });
 
-let negCanvas = document.getElementById("neg-holo-render")
-const negRenderer = new THREE.WebGLRenderer({canvas: negCanvas, alpha: true});
-negRenderer.setSize( window.innerWidth, window.innerHeight );
-
-camera.position.z = 6;
-const vFOV = (camera.fov * Math.PI) / 180;
-const height = 2 * Math.tan(vFOV / 2) * Math.abs(camera.position.z);
-const width = height * camera.aspect;
+// let negCanvas = document.getElementById("neg-holo-render")
+// const negRenderer = new THREE.WebGLRenderer({canvas: negCanvas, alpha: true});
+// negRenderer.setSize( window.innerWidth, window.innerHeight );
 const zmax = 4; 
+let isMobile;
+let vFOV = (camera.fov * Math.PI) / 180;
+let height = 2 * Math.tan(vFOV / 2) * Math.abs(camera.position.z);
+let width = height * camera.aspect;
+
+function setupRenderer(){
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setPixelRatio(window.devicePixelRatio);
+    isMobile = window.innerWidth < 1000;
+    const aspect = window.innerWidth / window.innerHeight
+
+    const fov = isMobile ? 40 : 50
+
+    camera.aspect = width / height;
+    camera.fov = fov;
+    const vFOV = (camera.fov * Math.PI) / 180;
+    height = 2 * Math.tan(vFOV / 2) * Math.abs(camera.position.z);
+    width = height * aspect;
+    camera.updateProjectionMatrix();
+
+
+}
+camera.position.z = 6;
+
 
 function createHolographicMaterial(spacing, grating) {
     const uniforms = THREE.UniformsUtils.merge([
@@ -30,7 +48,8 @@ function createHolographicMaterial(spacing, grating) {
             uKs: { value: 1.3 },
             uShininess: { value: 10.0 },
             uSpacing: { value: spacing },
-            uGratingFreq: { value: 1. }
+            uGratingFreq: { value: 1. },
+            uSpherePosition: { value: new THREE.Vector3()}
         }
     ]);
 
@@ -44,31 +63,6 @@ function createHolographicMaterial(spacing, grating) {
 
     return material;
 }
-function createNegatedHolographicMaterial(spacing, grating) {
-    const uniforms = THREE.UniformsUtils.merge([
-        THREE.UniformsLib.lights, 
-        {
-            uTol: { value: 0.1 },
-            uKa: { value: 0.8 },
-            uKd: { value: 0.9 },
-            uKs: { value: 1.3 },
-            uShininess: { value: 10.0 },
-            uSpacing: { value: spacing },
-            uGratingFreq: { value: 1. }
-        }
-    ]);
-
-    // material for shaders
-    const material = new THREE.ShaderMaterial({
-        uniforms: uniforms,
-        vertexShader: vertexShader(),
-        fragmentShader: negFragmentShader(),
-        lights: true
-    });
-
-    return material;
-}
-
 
 
 function vertexShader() {
@@ -78,6 +72,7 @@ function vertexShader() {
         varying vec3 vL;
         varying vec3 vE;
         varying vec3 vMC;
+        varying vec3 vWorldPosition;
 
         const vec3 LIGHTPOSITION = vec3(0.0, 10.0, -10.0);
 
@@ -86,6 +81,7 @@ function vertexShader() {
             vMC = position;
             vec4 ECposition = modelViewMatrix * vec4(position, 1.0);
             vN = normalMatrix * normal;
+            
             vL = LIGHTPOSITION - ECposition.xyz;
             vE = vec3(0.0, 0.0, 0.0) - ECposition.xyz;
             gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
@@ -100,7 +96,7 @@ function fragmentShader() {
         varying vec3 vL;
         varying vec3 vE;
         varying vec3 vMC;
-
+        varying vec3 vWorldPosition;
         uniform float uTol;
         uniform float uKa;
         uniform float uKd;
@@ -108,7 +104,7 @@ function fragmentShader() {
         uniform float uShininess;
         uniform float uSpacing;
         uniform float uGratingFreq;
-
+        uniform vec3 uSpherePosition;
         const vec3 OBJECTCOLOR = vec3(.0, .0, .0);
         const vec3 SPECULARCOLOR = vec3(1.0, 1.0, 1.0);
 
@@ -160,7 +156,7 @@ function fragmentShader() {
             
             vec3 diffractionColor = Rainbow(wavelength);
             
-            vec3 ambient = uKa * myColor;
+            vec3 ambient = (uKa * myColor) / 2.;
             float d_light = max(dot(Normal, Light), uTol);
             vec3 diffuse = uKd * d_light * myColor;
             
@@ -180,104 +176,14 @@ function fragmentShader() {
             vec3 finalColor = mix(
                 ambient + diffuse,
                 diffractionColor,
-                fresnelFactor * diffraction * .5
+                fresnelFactor * diffraction
             ) + specular;
-            
-            gl_FragColor = vec4(finalColor, .5);
-        }
-    `;
-}
-function negFragmentShader() {
-    return `
-        varying vec2 vST;
-        varying vec3 vN;
-        varying vec3 vL;
-        varying vec3 vE;
-        varying vec3 vMC;
-
-        uniform float uTol;
-        uniform float uKa;
-        uniform float uKd;
-        uniform float uKs;
-        uniform float uShininess;
-        uniform float uSpacing;
-        uniform float uGratingFreq;
-
-        const vec3 OBJECTCOLOR = vec3(.0, .0, .0);
-        const vec3 SPECULARCOLOR = vec3(1.0, 1.0, 1.0);
-
-        vec3 Rainbow(float t) {
-            t = clamp(t, 0.0, 1.0);
-            vec3 rgb = vec3(0.0, 0.0, 0.0);
-            
-            // b -> c
-            if(t >= 0.0) {
-                rgb.g = 4.0 * (t - (0.0/4.0));
-                rgb.b = 1.0;
+            if(vMC.y + uSpherePosition.y <= .0){
+                gl_FragColor = vec4(1. - finalColor, .5);
+            } else {
+                gl_FragColor = vec4(finalColor, .5); 
             }
             
-            // c -> g
-            if(t >= (1.0/4.0)) {
-                rgb.g = 1.0;
-                rgb.b = 1.0 - 4.0 * (t - (1.0/4.0));
-            }
-            
-            // g -> y
-            if(t >= (2.0/4.0)) {
-                rgb.r = 4.0 * (t - (2.0/4.0));
-                rgb.g = 1.0;
-            }
-            
-            // y -> r
-            if(t >= (3.0/4.0)) {
-                rgb.r = 1.0;
-                rgb.g = 1.0 - 4.0 * (t - (3.0/4.0));
-            }
-            
-            return rgb;
-        }
-
-        void main() {
-            vec3 myColor = OBJECTCOLOR;
-            vec2 st = vST;
-            vec3 Normal = normalize(vN);
-            vec3 Light = normalize(vL);
-            vec3 Eye = normalize(vE);
-            
-            vec3 Tangent = normalize(dFdx(vMC));
-            
-            float cosI = dot(Light, Tangent);
-            float cosR = dot(Eye, -Tangent);
-            float diffraction = abs(cosI - cosR);
-            
-            float wavelength = uGratingFreq * diffraction / uSpacing;
-            
-            vec3 diffractionColor = Rainbow(wavelength);
-            
-            vec3 ambient = uKa * myColor;
-            float d_light = max(dot(Normal, Light), uTol);
-            vec3 diffuse = uKd * d_light * myColor;
-            
-            float s = 0.0;
-            if(d_light > 0.0) {
-                vec3 ref = normalize(reflect(-Light, Normal));
-                float cosphi = dot(Eye, ref);
-                if(cosphi > 0.0)
-                    s = pow(max(cosphi, 0.0), uShininess);
-            }
-            vec3 specular = uKs * s * SPECULARCOLOR;
-            
-            // Fresnel calculation for holographic effect intensity
-            float fresnelFactor = pow(1.0 - max(0.0, dot(Eye, Normal)), 1.5);
-            float dv = smoothstep(0.0, 1.0, diffraction);
-            
-            vec3 finalColor = mix(
-                ambient + diffuse,
-                diffractionColor,
-                fresnelFactor * diffraction * .5
-            ) + specular;
-            
-            gl_FragColor = vec4(1. - finalColor, .5);
         }
     `;
 }
@@ -288,10 +194,10 @@ let SphereArray = []
 
 class SphereObject {
     
-    constructor(sphere, sphereNeg, boundary, x, y, z, sx, sy, sz){
+    constructor(sphere, boundary, x, y, z, sx, sy, sz){
         this.sphere = sphere
         this.boundary = boundary
-        this.sphereNeg = sphereNeg
+
         this.x = x
         this.y = y
         this.z = z
@@ -302,9 +208,10 @@ class SphereObject {
        
     }
 
-    increment(){
-        this.x += this.sx
-        if(this.x >= width - 2){
+    increment(deltaTime){
+        const speed = deltaTime * 60;
+        this.x += this.sx * speed 
+        if(this.x >= width - this.boundary.radius){
             
             let n = new THREE.Vector3(1., 0., 0.)
             this.reflect(n)
@@ -314,23 +221,25 @@ class SphereObject {
             this.reflect(n)
         }
 
-        this.y += this.sy
-        if(this.y >= (height - 1.)){
+        this.y += this.sy * speed
+        if(this.y >= (height - this.boundary.radius)){
             let n = new THREE.Vector3(0., 1., 0.)
             this.reflect(n)
-        } else if(this.y <= -height- 1.){
+        } else if(this.y <= -height- this.boundary.radius){
             let n = new THREE.Vector3(0., -1., 0.)
             this.reflect(n)
         }
 
-        this.z += this.sz
-        if(this.z >= zmax){
+        this.z += this.sz * speed
+        if(this.z >= zmax - this.boundary.radius){
             let n = new THREE.Vector3(0., 0., 1.)
             this.reflect(n)
-        } else if(this.z <= -zmax){
+        } else if(this.z <= -zmax + this.boundary.radius){
             let n = new THREE.Vector3(0., 0., -1.)
             this.reflect(n)
         }
+
+
     }
 
     reflect(normal){
@@ -340,7 +249,7 @@ class SphereObject {
         this.sx = reflected.x;
         this.sy = reflected.y;
         this.sz = reflected.z;
-        
+
     }
 
     setPosition(){
@@ -348,19 +257,23 @@ class SphereObject {
         this.sphere.position.y = this.y
         this.sphere.position.z = this.z
         this.boundary.center.set(this.x, this.y, this.z);
-        this.sphereNeg.position.x = this.x
-        this.sphereNeg.position.y = this.y
-        this.sphereNeg.position.z = this.z
+        this.sphere.material.uniforms.uSpherePosition.value.set(
+            this.sphere.position.x,
+            this.sphere.position.y,
+            this.sphere.position.z,
+        )
+
+
     }    
 
   
 }
 
 
-const createSphere = (aspect) => {
+const createSphere = () => {
     let s = [0., 0., 0.]
     for (let i = 0; i < s.length; i++) {
-        s[i] = parseFloat((Math.random() * 0.02)) * (Math.round(Math.random()) ? 1 : -1)
+        s[i] = (Math.random() * 0.01) * (Math.random() > 0.05 ? 1 : -1); 
     }
 
     let x = (Math.random() * (width + 0.0000) + 0.0000)
@@ -371,16 +284,15 @@ const createSphere = (aspect) => {
     
     let z = (Math.random() * (4.0000 + 0.0000) + 0.0000)
     z *= Math.round(Math.random()) ? 1 : -1
-    
-    const radius = .5
+    const radius = isMobile ? 0.2 : 0.5;
+    const segments = isMobile ? 32 : 64;    
     let spacing = (Math.random() * 10 + 1) + 1
     let grating = (Math.random() * 10 + 1) + 1
 
 
-    const geometry = new THREE.SphereGeometry( radius, 128, 128 )
+    const geometry = new THREE.SphereGeometry( radius, segments, segments )
     
 
-    const materialNeg = new createNegatedHolographicMaterial(spacing, grating)
 
     const materialReg = new createHolographicMaterial(spacing, grating)
  
@@ -390,40 +302,41 @@ const createSphere = (aspect) => {
     const sphere = new THREE.Mesh( geometry, materialReg )
     const boundingSphere = new THREE.Sphere(sphere.position, radius)
 
-    materialNeg.flatShading = false; 
-    const sphereNeg = new THREE.Mesh( geometry, materialNeg )
 
 
 
-    return new SphereObject(sphere, sphereNeg, boundingSphere, x, y, z, s[0], s[1], s[2])
+
+    return new SphereObject(sphere, boundingSphere, x, y, z, s[0], s[1], s[2])
 
 }
 
 const SceneManager = {
     currentScene: 'home',
-    init(){
+    init(isMobile){
+        SphereArray.forEach(s => null)
         for(let i = 0; i < 20; i++){
-            SphereArray.push(createSphere(window.innerHeight / window.innerWidth))
+            SphereArray.push(createSphere(isMobile))
             scene.add( SphereArray[i].sphere )
-            negScene.add( SphereArray[i].sphereNeg )
             
         }        
     },
-    
+   
+}
+function init(){
+    setupRenderer()
+    SceneManager.init()
 }
 
-SceneManager.init()
-
-
-function animate()
+let lastTime = 0
+function animate(time)
 {
 
-    
+    const deltaTime = (time - lastTime) / 1000;
+    lastTime = time
     renderer.render( scene, camera );
-    negRenderer.render( negScene, camera );
     for(let i = 0; i < SphereArray.length; i++){
         
-        SphereArray[i].increment()
+        SphereArray[i].increment(deltaTime)
         SphereArray[i].setPosition()
         for(let j = i + 1; j < SphereArray.length; j++){
               const s1 = SphereArray[i];
@@ -435,8 +348,8 @@ function animate()
               const distance = distanceVec.length();
               
               const minDistance = s1.boundary.radius + s2.boundary.radius;
-              
-              if (distance < minDistance) {
+              const epsilon = 0.001
+              if (distance < minDistance - epsilon) {
                   const penetrationDepth = minDistance - distance;
                   
                   const normal = distanceVec.normalize();
@@ -470,7 +383,13 @@ function animate()
                       s2.x -= correction.x;
                       s2.y -= correction.y;
                       s2.z -= correction.z;
-                      
+                      const maxSpeed = 0.05;
+                      s1.sx = THREE.MathUtils.clamp(s1.sx, -maxSpeed, maxSpeed);
+                      s1.sy = THREE.MathUtils.clamp(s1.sy, -maxSpeed, maxSpeed);
+                      s1.sz = THREE.MathUtils.clamp(s1.sz, -maxSpeed, maxSpeed);
+                      s2.sx = THREE.MathUtils.clamp(s2.sx, -maxSpeed, maxSpeed);
+                      s2.sy = THREE.MathUtils.clamp(s2.sy, -maxSpeed, maxSpeed);
+                      s2.sz = THREE.MathUtils.clamp(s2.sz, -maxSpeed, maxSpeed);
                       s1.setPosition();
                       s2.setPosition();
                   }
@@ -482,12 +401,12 @@ function animate()
     
 }
 renderer.setAnimationLoop( animate );
-negRenderer.setAnimationLoop( animate );
 
-
-window.addEventListener('resize', (e)=>{
-    let SphereArray = null
-
-    SceneManager.init()
-
-})
+init()
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        setupRenderer();
+    }, 200);
+});

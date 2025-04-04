@@ -23,6 +23,8 @@ type Project struct {
 	Company      string
 	Technologies []string
 	Link         string
+	Image        string
+	Video        string
 }
 
 var work = []Work{
@@ -97,11 +99,13 @@ var projects = []Project{
 			"Tailwind",
 			"Docker",
 		},
-		Link: "https://github.com/digitaldisarray/CTFCollab",
+		Link:  "https://github.com/digitaldisarray/CTFCollab",
+		Image: "/static/img/projects/ctf-collab/ctf-collab-home.png",
+		Video: "/static/img/projects/ctf-collab/ctf-collab-demo.mp4",
 	},
 	{
 		Name:        "This Portfolio",
-		Description: "Created and designed to showcase my abilities and experience. Utilizes Three.js and GLSL shaders, as well as Go templates.",
+		Description: "Created and designed to showcase my abilities and experience. Utilizes Three.js and GLSL shaders, as well as Go templates. The holographic shader was adapted from a final project in my shaders class.",
 		Company:     "Personal",
 		Technologies: []string{
 			"Go",
@@ -119,26 +123,45 @@ var projects = []Project{
 			"CSS",
 			"Node.js",
 		},
-		Link: "https://github.com/brayden-aldrich/picnic-defender",
+		Link:  "https://github.com/brayden-aldrich/picnic-defender",
+		Image: "/static/img/projects/picnic-defenders/picnic-defenders-home.png",
+		Video: "/static/img/projects/picnic-defenders/picnic-defenders-demo.mp4",
 	},
 	{
 		Name:        "Mastermind MASM",
-		Description: "Mastermind created in Microsoft Macro Assembler (MASM)",
+		Description: "Mastermind created in Microsoft Macro Assembler (MASM). I was responsible for programming user interaction via key commands, setting the ui response, and game state flow. ",
 		Company:     "Oregon State University",
 		Technologies: []string{
 			"MASM",
 		},
-		Link: "https://github.com/brayden-aldrich/Mastermind-Assembly",
+		Link:  "https://github.com/brayden-aldrich/Mastermind-Assembly",
+		Image: "/static/img/projects/mastermind.png",
+		Video: "",
+	},
+	{
+		Name:        "Treasure Hunt",
+		Description: "Mobile treasure hunt game where the user must decipher clues to find the location hinted at. Features 3 locations around Corvallis, Oregon.",
+		Company:     "Oregon State University",
+		Technologies: []string{
+			"Jetpack Compose",
+			"Kotlin",
+			"Android Services",
+		},
+		Link:  "",
+		Image: "/static/img/projects/treasure-hunt/treasure-hunt.png",
+		Video: "/static/img/projects/treasure-hunt/treasure-hunt-demo.mp4",
 	},
 	{
 		Name:        "smallsh",
-		Description: "Bash shell implementation written in C in just 252 lines!",
+		Description: "Bash shell implementation written in C in just 252 lines! Handles forks, redirects, comments, $$, exit, cd, status, and exec. Also detects SIGINT and SIGSTP signals. ",
 		Company:     "Oregon State University",
 		Technologies: []string{
 			"C",
 			"Bash",
 		},
-		Link: "https://github.com/brayden-aldrich/smallsh/blob/master/smallsh.c",
+		Link:  "https://github.com/brayden-aldrich/smallsh",
+		Image: "",
+		Video: "",
 	},
 	{
 		Name:        "User Permissions Matrix",
@@ -149,7 +172,9 @@ var projects = []Project{
 			"TKinter",
 			"PTC Integrity",
 		},
-		Link: "",
+		Link:  "",
+		Image: "",
+		Video: "",
 	},
 	{
 		Name:        "Load Calculator",
@@ -160,7 +185,9 @@ var projects = []Project{
 			"CSS",
 			"HTML",
 		},
-		Link: "",
+		Link:  "",
+		Image: "/static/img/projects/makerspace.png",
+		Video: "",
 	},
 }
 

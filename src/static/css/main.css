@@ -13,9 +13,20 @@ html, body {
     scroll-behavior: smooth;
 }
 
+
+
+#home, #about {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
 #home {
     font-family: 'Inter', sans-serif;
     background: rgb(255,255,255);
+    width: 100vw;
+    height: 100vh;
     background: linear-gradient(white, rgba(174, 210, 255, 1), rgb(37, 45, 54));
 
 }
@@ -23,39 +34,42 @@ html, body {
 #about  {
     font-family: 'Inter', sans-serif;
     background: linear-gradient(rgb(37, 45, 54), rgba(174, 210, 255, 1));
-    /* background: 
-        radial-gradient(circle at center, rgba(174,211,255,.1), rgb(37, 45, 54) 50%) center; */
-    display: flex;
-}
-
-section {
-    position: relative;
     width: 100vw;
     height: 100vh;
+    /* background: 
+        radial-gradient(circle at center, rgba(174,211,255,.1), rgb(37, 45, 54) 50%) center; */
+    
 }
 
-section a {
-    position: absolute;
-    bottom: 15.5vh;
-    left: 50%;
-    z-index: 2;
-   
+
+#threejs-home-about{
+    position: relative;
+    height: 200vh;
+    
 }
-section a span {
+
+#holo-render {
     position: absolute;
     top: 0;
-    left: 50%;
-    width: 4.5vh;
-    height: 4.5vh;
-    margin-left: -12px;
-    border-left: 2.5px solid #000000;
-    border-bottom: 2.5px solid #000000;
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-    -webkit-animation: sdb04 2s infinite;
-    animation: sdb04 2s infinite;
-    box-sizing: border-box;
+    left: 0;
+    width: 100vw;
+
+    min-height: 200vh;
+    z-index: 0;
+    
 }
+
+/* @media screen and (max-width: 1000px) {
+    #holo-render {
+        min-height: 100vh; 
+    }
+
+    #intro-text h1 {
+        color: red;
+    }
+
+} */
+
 @-webkit-keyframes sdb04 {
     0% {
         -webkit-transform: rotate(-45deg) translate(0, 0);
@@ -79,30 +93,19 @@ section a span {
     }
 }
 
-#holo-render {
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    z-index: -2;
-    display: block; /
-}
+
 
 #intro-text {
     display: flex;
-    justify-content: center;  
-    align-items: center;      
-    width: 50%;
-    height: 50%;
-    margin: auto;             
-
-    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
 }
+
 #intro-text h1 {
     font-family: "Aldrich", monospace;
     font-weight: bold;
@@ -157,10 +160,7 @@ nav a:hover {
 }
 
 
-section img {
-    display: block;
-    width: 25%;
-}
+
 
 
 footer a {
@@ -188,12 +188,21 @@ footer a:hover {
 }
 
 
-#neg-holo-render {
-    position: absolute;
-    z-index: -1;
+#about-content {
+
+    display: inline;
 }
 
-#about-p {
+
+#about-content img {
+    display: inline;
+    /* border-radius: 50%; */
+    border: 2px solid #22282D;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+
+    max-width: 250px;
+}
+#about p {
     margin: auto;
     width: 50%;
     
@@ -202,6 +211,9 @@ footer a:hover {
     justify-content: center;
     background-color: white;
     border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    border: 2px solid #22282D;
+
     padding: 25px;
     font-size: 1.25rem;
     color: rgb(34, 40, 45);
@@ -340,7 +352,7 @@ footer a:hover {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 #companies-selection,
@@ -381,7 +393,32 @@ footer a:hover {
         'GRAD' 0,
         'opsz' 24
 }
-
-#expand {
+.material-symbols-outlined:hover {
+    color: rgba(174,211,255,1);
+    font-size: 2.0rem;
+    cursor: pointer;
+}
+.expand {
     width: 100vw;
+    height: 100vh;
+    max-height: 90vh;
+    max-width: 90vw;
+    padding: 35px;
+}
+
+.project-card img {
+    
+    margin-right: auto;
+    max-width: 90%;  /* Ensures image doesn't overflow */
+    max-height: 90%;
+    display: block;    /* Removes extra space below image */
+}
+
+.project-name a{
+    text-decoration: none;
+    color: black;
+}
+
+.project-name a:hover{
+    color: rgba(174,211,255,1);
 }

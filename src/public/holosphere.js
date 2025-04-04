@@ -22,8 +22,101 @@
   function euclideanModulo(n, m) {
     return (n % m + m) % m;
   }
+  function mapLinear(x, a1, a2, b1, b2) {
+    return b1 + (x - a1) * (b2 - b1) / (a2 - a1);
+  }
+  function inverseLerp(x, y, value) {
+    if (x !== y) {
+      return (value - x) / (y - x);
+    } else {
+      return 0;
+    }
+  }
   function lerp(x, y, t) {
     return (1 - t) * x + t * y;
+  }
+  function damp(x, y, lambda, dt) {
+    return lerp(x, y, 1 - Math.exp(-lambda * dt));
+  }
+  function pingpong(x, length = 1) {
+    return length - Math.abs(euclideanModulo(x, length * 2) - length);
+  }
+  function smoothstep(x, min, max) {
+    if (x <= min) return 0;
+    if (x >= max) return 1;
+    x = (x - min) / (max - min);
+    return x * x * (3 - 2 * x);
+  }
+  function smootherstep(x, min, max) {
+    if (x <= min) return 0;
+    if (x >= max) return 1;
+    x = (x - min) / (max - min);
+    return x * x * x * (x * (x * 6 - 15) + 10);
+  }
+  function randInt(low, high) {
+    return low + Math.floor(Math.random() * (high - low + 1));
+  }
+  function randFloat(low, high) {
+    return low + Math.random() * (high - low);
+  }
+  function randFloatSpread(range) {
+    return range * (0.5 - Math.random());
+  }
+  function seededRandom(s) {
+    if (s !== void 0) _seed = s;
+    let t = _seed += 1831565813;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  }
+  function degToRad(degrees) {
+    return degrees * DEG2RAD;
+  }
+  function radToDeg(radians) {
+    return radians * RAD2DEG;
+  }
+  function isPowerOfTwo(value) {
+    return (value & value - 1) === 0 && value !== 0;
+  }
+  function ceilPowerOfTwo(value) {
+    return Math.pow(2, Math.ceil(Math.log(value) / Math.LN2));
+  }
+  function floorPowerOfTwo(value) {
+    return Math.pow(2, Math.floor(Math.log(value) / Math.LN2));
+  }
+  function setQuaternionFromProperEuler(q, a, b, c, order) {
+    const cos = Math.cos;
+    const sin = Math.sin;
+    const c2 = cos(b / 2);
+    const s2 = sin(b / 2);
+    const c13 = cos((a + c) / 2);
+    const s13 = sin((a + c) / 2);
+    const c1_3 = cos((a - c) / 2);
+    const s1_3 = sin((a - c) / 2);
+    const c3_1 = cos((c - a) / 2);
+    const s3_1 = sin((c - a) / 2);
+    switch (order) {
+      case "XYX":
+        q.set(c2 * s13, s2 * c1_3, s2 * s1_3, c2 * c13);
+        break;
+      case "YZY":
+        q.set(s2 * s1_3, c2 * s13, s2 * c1_3, c2 * c13);
+        break;
+      case "ZXZ":
+        q.set(s2 * c1_3, s2 * s1_3, c2 * s13, c2 * c13);
+        break;
+      case "XZX":
+        q.set(c2 * s13, s2 * s3_1, s2 * c3_1, c2 * c13);
+        break;
+      case "YXY":
+        q.set(s2 * c3_1, c2 * s13, s2 * s3_1, c2 * c13);
+        break;
+      case "ZYZ":
+        q.set(s2 * s3_1, s2 * c3_1, c2 * s13, c2 * c13);
+        break;
+      default:
+        console.warn("THREE.MathUtils: .setQuaternionFromProperEuler() encountered an unknown order: " + order);
+    }
   }
   function denormalize(value, array) {
     switch (array.constructor) {
@@ -484,7 +577,7 @@
     }
     throw new Error(`Unknown texture type ${type}.`);
   }
-  var REVISION, CullFaceNone, CullFaceBack, CullFaceFront, PCFShadowMap, PCFSoftShadowMap, VSMShadowMap, FrontSide, BackSide, DoubleSide, NoBlending, NormalBlending, AdditiveBlending, SubtractiveBlending, MultiplyBlending, CustomBlending, AddEquation, SubtractEquation, ReverseSubtractEquation, MinEquation, MaxEquation, ZeroFactor, OneFactor, SrcColorFactor, OneMinusSrcColorFactor, SrcAlphaFactor, OneMinusSrcAlphaFactor, DstAlphaFactor, OneMinusDstAlphaFactor, DstColorFactor, OneMinusDstColorFactor, SrcAlphaSaturateFactor, ConstantColorFactor, OneMinusConstantColorFactor, ConstantAlphaFactor, OneMinusConstantAlphaFactor, NeverDepth, AlwaysDepth, LessDepth, LessEqualDepth, EqualDepth, GreaterEqualDepth, GreaterDepth, NotEqualDepth, MultiplyOperation, MixOperation, AddOperation, NoToneMapping, LinearToneMapping, ReinhardToneMapping, CineonToneMapping, ACESFilmicToneMapping, CustomToneMapping, AgXToneMapping, NeutralToneMapping, UVMapping, CubeReflectionMapping, CubeRefractionMapping, EquirectangularReflectionMapping, EquirectangularRefractionMapping, CubeUVReflectionMapping, RepeatWrapping, ClampToEdgeWrapping, MirroredRepeatWrapping, NearestFilter, NearestMipmapNearestFilter, NearestMipmapLinearFilter, LinearFilter, LinearMipmapNearestFilter, LinearMipmapLinearFilter, UnsignedByteType, ByteType, ShortType, UnsignedShortType, IntType, UnsignedIntType, FloatType, HalfFloatType, UnsignedShort4444Type, UnsignedShort5551Type, UnsignedInt248Type, UnsignedInt5999Type, AlphaFormat, RGBFormat, RGBAFormat, LuminanceFormat, LuminanceAlphaFormat, DepthFormat, DepthStencilFormat, RedFormat, RedIntegerFormat, RGFormat, RGIntegerFormat, RGBAIntegerFormat, RGB_S3TC_DXT1_Format, RGBA_S3TC_DXT1_Format, RGBA_S3TC_DXT3_Format, RGBA_S3TC_DXT5_Format, RGB_PVRTC_4BPPV1_Format, RGB_PVRTC_2BPPV1_Format, RGBA_PVRTC_4BPPV1_Format, RGBA_PVRTC_2BPPV1_Format, RGB_ETC1_Format, RGB_ETC2_Format, RGBA_ETC2_EAC_Format, RGBA_ASTC_4x4_Format, RGBA_ASTC_5x4_Format, RGBA_ASTC_5x5_Format, RGBA_ASTC_6x5_Format, RGBA_ASTC_6x6_Format, RGBA_ASTC_8x5_Format, RGBA_ASTC_8x6_Format, RGBA_ASTC_8x8_Format, RGBA_ASTC_10x5_Format, RGBA_ASTC_10x6_Format, RGBA_ASTC_10x8_Format, RGBA_ASTC_10x10_Format, RGBA_ASTC_12x10_Format, RGBA_ASTC_12x12_Format, RGBA_BPTC_Format, RGB_BPTC_SIGNED_Format, RGB_BPTC_UNSIGNED_Format, RED_RGTC1_Format, SIGNED_RED_RGTC1_Format, RED_GREEN_RGTC2_Format, SIGNED_RED_GREEN_RGTC2_Format, InterpolateDiscrete, InterpolateLinear, InterpolateSmooth, ZeroCurvatureEnding, ZeroSlopeEnding, WrapAroundEnding, BasicDepthPacking, RGBADepthPacking, TangentSpaceNormalMap, ObjectSpaceNormalMap, NoColorSpace, SRGBColorSpace, LinearSRGBColorSpace, LinearTransfer, SRGBTransfer, KeepStencilOp, AlwaysStencilFunc, NeverCompare, LessCompare, EqualCompare, LessEqualCompare, GreaterCompare, NotEqualCompare, GreaterEqualCompare, AlwaysCompare, StaticDrawUsage, GLSL3, WebGLCoordinateSystem, WebGPUCoordinateSystem, EventDispatcher, _lut, DEG2RAD, RAD2DEG, Vector2, Matrix3, _m3, _cache, LINEAR_REC709_TO_XYZ, XYZ_TO_LINEAR_REC709, ColorManagement, _canvas, ImageUtils, _sourceId, Source, _textureId, Texture, Vector4, RenderTarget, WebGLRenderTarget, DataArrayTexture, Data3DTexture, Quaternion, Vector3, _vector$c, _quaternion$4, Box3, _points, _vector$b, _box$4, _v0$2, _v1$7, _v2$4, _f0, _f1, _f2, _center, _extents, _triangleNormal, _testAxis, _box$3, _v1$6, _v2$3, Sphere, _vector$a, _segCenter, _segDir, _diff, _edge1, _edge2, _normal$1, Ray, Matrix4, _v1$5, _m1$2, _zero, _one, _x, _y, _z, _matrix$2, _quaternion$3, Euler, Layers, _object3DId, _v1$4, _q1, _m1$1, _target, _position$3, _scale$2, _quaternion$2, _xAxis, _yAxis, _zAxis, _addedEvent, _removedEvent, _childaddedEvent, _childremovedEvent, Object3D, _v0$1, _v1$3, _v2$2, _v3$2, _vab, _vac, _vbc, _vap, _vbp, _vcp, _v40, _v41, _v42, Triangle, _colorKeywords, _hslA, _hslB, Color, _color, _materialId, Material, MeshBasicMaterial, _vector$9, _vector2$1, _id$2, BufferAttribute, Uint16BufferAttribute, Uint32BufferAttribute, Float32BufferAttribute, _id$1, _m1, _obj, _offset, _box$2, _boxMorphTargets, _vector$8, BufferGeometry, _inverseMatrix$3, _ray$3, _sphere$6, _sphereHitAt, _vA$1, _vB$1, _vC$1, _tempA, _morphA, _intersectionPoint, _intersectionPointWorld, Mesh, BoxGeometry, UniformsUtils, default_vertex, default_fragment, ShaderMaterial, Camera, _v3$1, _minTarget, _maxTarget, PerspectiveCamera, fov, aspect, CubeCamera, CubeTexture, WebGLCubeRenderTarget, Group, _moveEvent, WebXRController, Scene, _vector1, _vector2, _normalMatrix, Plane, _sphere$3, _vector$6, Frustum, DepthTexture, PlaneGeometry, SphereGeometry, MeshDepthMaterial, MeshDistanceMaterial, Interpolant, CubicInterpolant, LinearInterpolant, DiscreteInterpolant, KeyframeTrack, BooleanKeyframeTrack, ColorKeyframeTrack, NumberKeyframeTrack, QuaternionLinearInterpolant, QuaternionKeyframeTrack, StringKeyframeTrack, VectorKeyframeTrack, LoadingManager, DefaultLoadingManager, Loader, OrthographicCamera, ArrayCamera, _RESERVED_CHARS_RE, _reservedRe, _wordChar, _wordCharOrDot, _directoryRe, _nodeRe, _objectRe, _propertyRe, _trackRe, _supportedObjectNames, Composite, PropertyBinding, _controlInterpolantsResultBuffer;
+  var REVISION, CullFaceNone, CullFaceBack, CullFaceFront, PCFShadowMap, PCFSoftShadowMap, VSMShadowMap, FrontSide, BackSide, DoubleSide, NoBlending, NormalBlending, AdditiveBlending, SubtractiveBlending, MultiplyBlending, CustomBlending, AddEquation, SubtractEquation, ReverseSubtractEquation, MinEquation, MaxEquation, ZeroFactor, OneFactor, SrcColorFactor, OneMinusSrcColorFactor, SrcAlphaFactor, OneMinusSrcAlphaFactor, DstAlphaFactor, OneMinusDstAlphaFactor, DstColorFactor, OneMinusDstColorFactor, SrcAlphaSaturateFactor, ConstantColorFactor, OneMinusConstantColorFactor, ConstantAlphaFactor, OneMinusConstantAlphaFactor, NeverDepth, AlwaysDepth, LessDepth, LessEqualDepth, EqualDepth, GreaterEqualDepth, GreaterDepth, NotEqualDepth, MultiplyOperation, MixOperation, AddOperation, NoToneMapping, LinearToneMapping, ReinhardToneMapping, CineonToneMapping, ACESFilmicToneMapping, CustomToneMapping, AgXToneMapping, NeutralToneMapping, UVMapping, CubeReflectionMapping, CubeRefractionMapping, EquirectangularReflectionMapping, EquirectangularRefractionMapping, CubeUVReflectionMapping, RepeatWrapping, ClampToEdgeWrapping, MirroredRepeatWrapping, NearestFilter, NearestMipmapNearestFilter, NearestMipmapLinearFilter, LinearFilter, LinearMipmapNearestFilter, LinearMipmapLinearFilter, UnsignedByteType, ByteType, ShortType, UnsignedShortType, IntType, UnsignedIntType, FloatType, HalfFloatType, UnsignedShort4444Type, UnsignedShort5551Type, UnsignedInt248Type, UnsignedInt5999Type, AlphaFormat, RGBFormat, RGBAFormat, LuminanceFormat, LuminanceAlphaFormat, DepthFormat, DepthStencilFormat, RedFormat, RedIntegerFormat, RGFormat, RGIntegerFormat, RGBAIntegerFormat, RGB_S3TC_DXT1_Format, RGBA_S3TC_DXT1_Format, RGBA_S3TC_DXT3_Format, RGBA_S3TC_DXT5_Format, RGB_PVRTC_4BPPV1_Format, RGB_PVRTC_2BPPV1_Format, RGBA_PVRTC_4BPPV1_Format, RGBA_PVRTC_2BPPV1_Format, RGB_ETC1_Format, RGB_ETC2_Format, RGBA_ETC2_EAC_Format, RGBA_ASTC_4x4_Format, RGBA_ASTC_5x4_Format, RGBA_ASTC_5x5_Format, RGBA_ASTC_6x5_Format, RGBA_ASTC_6x6_Format, RGBA_ASTC_8x5_Format, RGBA_ASTC_8x6_Format, RGBA_ASTC_8x8_Format, RGBA_ASTC_10x5_Format, RGBA_ASTC_10x6_Format, RGBA_ASTC_10x8_Format, RGBA_ASTC_10x10_Format, RGBA_ASTC_12x10_Format, RGBA_ASTC_12x12_Format, RGBA_BPTC_Format, RGB_BPTC_SIGNED_Format, RGB_BPTC_UNSIGNED_Format, RED_RGTC1_Format, SIGNED_RED_RGTC1_Format, RED_GREEN_RGTC2_Format, SIGNED_RED_GREEN_RGTC2_Format, InterpolateDiscrete, InterpolateLinear, InterpolateSmooth, ZeroCurvatureEnding, ZeroSlopeEnding, WrapAroundEnding, BasicDepthPacking, RGBADepthPacking, TangentSpaceNormalMap, ObjectSpaceNormalMap, NoColorSpace, SRGBColorSpace, LinearSRGBColorSpace, LinearTransfer, SRGBTransfer, KeepStencilOp, AlwaysStencilFunc, NeverCompare, LessCompare, EqualCompare, LessEqualCompare, GreaterCompare, NotEqualCompare, GreaterEqualCompare, AlwaysCompare, StaticDrawUsage, GLSL3, WebGLCoordinateSystem, WebGPUCoordinateSystem, EventDispatcher, _lut, _seed, DEG2RAD, RAD2DEG, MathUtils, Vector2, Matrix3, _m3, _cache, LINEAR_REC709_TO_XYZ, XYZ_TO_LINEAR_REC709, ColorManagement, _canvas, ImageUtils, _sourceId, Source, _textureId, Texture, Vector4, RenderTarget, WebGLRenderTarget, DataArrayTexture, Data3DTexture, Quaternion, Vector3, _vector$c, _quaternion$4, Box3, _points, _vector$b, _box$4, _v0$2, _v1$7, _v2$4, _f0, _f1, _f2, _center, _extents, _triangleNormal, _testAxis, _box$3, _v1$6, _v2$3, Sphere, _vector$a, _segCenter, _segDir, _diff, _edge1, _edge2, _normal$1, Ray, Matrix4, _v1$5, _m1$2, _zero, _one, _x, _y, _z, _matrix$2, _quaternion$3, Euler, Layers, _object3DId, _v1$4, _q1, _m1$1, _target, _position$3, _scale$2, _quaternion$2, _xAxis, _yAxis, _zAxis, _addedEvent, _removedEvent, _childaddedEvent, _childremovedEvent, Object3D, _v0$1, _v1$3, _v2$2, _v3$2, _vab, _vac, _vbc, _vap, _vbp, _vcp, _v40, _v41, _v42, Triangle, _colorKeywords, _hslA, _hslB, Color, _color, _materialId, Material, MeshBasicMaterial, _vector$9, _vector2$1, _id$2, BufferAttribute, Uint16BufferAttribute, Uint32BufferAttribute, Float32BufferAttribute, _id$1, _m1, _obj, _offset, _box$2, _boxMorphTargets, _vector$8, BufferGeometry, _inverseMatrix$3, _ray$3, _sphere$6, _sphereHitAt, _vA$1, _vB$1, _vC$1, _tempA, _morphA, _intersectionPoint, _intersectionPointWorld, Mesh, BoxGeometry, UniformsUtils, default_vertex, default_fragment, ShaderMaterial, Camera, _v3$1, _minTarget, _maxTarget, PerspectiveCamera, fov, aspect, CubeCamera, CubeTexture, WebGLCubeRenderTarget, Group, _moveEvent, WebXRController, Scene, _vector1, _vector2, _normalMatrix, Plane, _sphere$3, _vector$6, Frustum, DepthTexture, PlaneGeometry, SphereGeometry, MeshDepthMaterial, MeshDistanceMaterial, Interpolant, CubicInterpolant, LinearInterpolant, DiscreteInterpolant, KeyframeTrack, BooleanKeyframeTrack, ColorKeyframeTrack, NumberKeyframeTrack, QuaternionLinearInterpolant, QuaternionKeyframeTrack, StringKeyframeTrack, VectorKeyframeTrack, LoadingManager, DefaultLoadingManager, Loader, OrthographicCamera, ArrayCamera, _RESERVED_CHARS_RE, _reservedRe, _wordChar, _wordCharOrDot, _directoryRe, _nodeRe, _objectRe, _propertyRe, _trackRe, _supportedObjectNames, Composite, PropertyBinding, _controlInterpolantsResultBuffer;
   var init_three_core = __esm({
     "node_modules/three/build/three.core.js"() {
       REVISION = "174";
@@ -708,8 +801,35 @@
         }
       };
       _lut = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "0a", "0b", "0c", "0d", "0e", "0f", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "1a", "1b", "1c", "1d", "1e", "1f", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2a", "2b", "2c", "2d", "2e", "2f", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "3a", "3b", "3c", "3d", "3e", "3f", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "4a", "4b", "4c", "4d", "4e", "4f", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "5a", "5b", "5c", "5d", "5e", "5f", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "6a", "6b", "6c", "6d", "6e", "6f", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "7a", "7b", "7c", "7d", "7e", "7f", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "8a", "8b", "8c", "8d", "8e", "8f", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "9a", "9b", "9c", "9d", "9e", "9f", "a0", "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8", "a9", "aa", "ab", "ac", "ad", "ae", "af", "b0", "b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "b9", "ba", "bb", "bc", "bd", "be", "bf", "c0", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "ca", "cb", "cc", "cd", "ce", "cf", "d0", "d1", "d2", "d3", "d4", "d5", "d6", "d7", "d8", "d9", "da", "db", "dc", "dd", "de", "df", "e0", "e1", "e2", "e3", "e4", "e5", "e6", "e7", "e8", "e9", "ea", "eb", "ec", "ed", "ee", "ef", "f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "fa", "fb", "fc", "fd", "fe", "ff"];
+      _seed = 1234567;
       DEG2RAD = Math.PI / 180;
       RAD2DEG = 180 / Math.PI;
+      MathUtils = {
+        DEG2RAD,
+        RAD2DEG,
+        generateUUID,
+        clamp,
+        euclideanModulo,
+        mapLinear,
+        inverseLerp,
+        lerp,
+        damp,
+        pingpong,
+        smoothstep,
+        smootherstep,
+        randInt,
+        randFloat,
+        randFloatSpread,
+        seededRandom,
+        degToRad,
+        radToDeg,
+        isPowerOfTwo,
+        ceilPowerOfTwo,
+        floorPowerOfTwo,
+        setQuaternionFromProperEuler,
+        normalize,
+        denormalize
+      };
       Vector2 = class _Vector2 {
         /**
          * Constructs a new 2D vector.
@@ -23423,19 +23543,28 @@ void main() {
     "src/static/js/holosphere.js"() {
       init_three_module();
       var scene = new Scene();
-      var negScene = new Scene();
-      var camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1e3);
+      var camera = new PerspectiveCamera(60, 1, 1, 500);
       var canvas = document.getElementById("holo-render");
-      var renderer = new WebGLRenderer({ canvas, alpha: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      var negCanvas = document.getElementById("neg-holo-render");
-      var negRenderer = new WebGLRenderer({ canvas: negCanvas, alpha: true });
-      negRenderer.setSize(window.innerWidth, window.innerHeight);
-      camera.position.z = 6;
+      var renderer = new WebGLRenderer({ canvas, alpha: true, antialias: true });
+      var zmax = 4;
+      var isMobile;
       var vFOV = camera.fov * Math.PI / 180;
       var height = 2 * Math.tan(vFOV / 2) * Math.abs(camera.position.z);
       var width = height * camera.aspect;
-      var zmax = 4;
+      function setupRenderer() {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        isMobile = window.innerWidth < 1e3;
+        const aspect2 = window.innerWidth / window.innerHeight;
+        const fov2 = isMobile ? 40 : 50;
+        camera.aspect = width / height;
+        camera.fov = fov2;
+        const vFOV2 = camera.fov * Math.PI / 180;
+        height = 2 * Math.tan(vFOV2 / 2) * Math.abs(camera.position.z);
+        width = height * aspect2;
+        camera.updateProjectionMatrix();
+      }
+      camera.position.z = 6;
       function createHolographicMaterial(spacing, grating) {
         const uniforms = UniformsUtils.merge([
           UniformsLib.lights,
@@ -23446,34 +23575,14 @@ void main() {
             uKs: { value: 1.3 },
             uShininess: { value: 10 },
             uSpacing: { value: spacing },
-            uGratingFreq: { value: 1 }
+            uGratingFreq: { value: 1 },
+            uSpherePosition: { value: new Vector3() }
           }
         ]);
         const material = new ShaderMaterial({
           uniforms,
           vertexShader: vertexShader(),
           fragmentShader: fragmentShader(),
-          lights: true
-        });
-        return material;
-      }
-      function createNegatedHolographicMaterial(spacing, grating) {
-        const uniforms = UniformsUtils.merge([
-          UniformsLib.lights,
-          {
-            uTol: { value: 0.1 },
-            uKa: { value: 0.8 },
-            uKd: { value: 0.9 },
-            uKs: { value: 1.3 },
-            uShininess: { value: 10 },
-            uSpacing: { value: spacing },
-            uGratingFreq: { value: 1 }
-          }
-        ]);
-        const material = new ShaderMaterial({
-          uniforms,
-          vertexShader: vertexShader(),
-          fragmentShader: negFragmentShader(),
           lights: true
         });
         return material;
@@ -23485,6 +23594,7 @@ void main() {
         varying vec3 vL;
         varying vec3 vE;
         varying vec3 vMC;
+        varying vec3 vWorldPosition;
 
         const vec3 LIGHTPOSITION = vec3(0.0, 10.0, -10.0);
 
@@ -23493,6 +23603,7 @@ void main() {
             vMC = position;
             vec4 ECposition = modelViewMatrix * vec4(position, 1.0);
             vN = normalMatrix * normal;
+            
             vL = LIGHTPOSITION - ECposition.xyz;
             vE = vec3(0.0, 0.0, 0.0) - ECposition.xyz;
             gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
@@ -23506,7 +23617,7 @@ void main() {
         varying vec3 vL;
         varying vec3 vE;
         varying vec3 vMC;
-
+        varying vec3 vWorldPosition;
         uniform float uTol;
         uniform float uKa;
         uniform float uKd;
@@ -23514,7 +23625,7 @@ void main() {
         uniform float uShininess;
         uniform float uSpacing;
         uniform float uGratingFreq;
-
+        uniform vec3 uSpherePosition;
         const vec3 OBJECTCOLOR = vec3(.0, .0, .0);
         const vec3 SPECULARCOLOR = vec3(1.0, 1.0, 1.0);
 
@@ -23566,7 +23677,7 @@ void main() {
             
             vec3 diffractionColor = Rainbow(wavelength);
             
-            vec3 ambient = uKa * myColor;
+            vec3 ambient = (uKa * myColor) / 2.;
             float d_light = max(dot(Normal, Light), uTol);
             vec3 diffuse = uKd * d_light * myColor;
             
@@ -23586,113 +23697,22 @@ void main() {
             vec3 finalColor = mix(
                 ambient + diffuse,
                 diffractionColor,
-                fresnelFactor * diffraction * .5
+                fresnelFactor * diffraction
             ) + specular;
-            
-            gl_FragColor = vec4(finalColor, .5);
-        }
-    `;
-      }
-      function negFragmentShader() {
-        return `
-        varying vec2 vST;
-        varying vec3 vN;
-        varying vec3 vL;
-        varying vec3 vE;
-        varying vec3 vMC;
-
-        uniform float uTol;
-        uniform float uKa;
-        uniform float uKd;
-        uniform float uKs;
-        uniform float uShininess;
-        uniform float uSpacing;
-        uniform float uGratingFreq;
-
-        const vec3 OBJECTCOLOR = vec3(.0, .0, .0);
-        const vec3 SPECULARCOLOR = vec3(1.0, 1.0, 1.0);
-
-        vec3 Rainbow(float t) {
-            t = clamp(t, 0.0, 1.0);
-            vec3 rgb = vec3(0.0, 0.0, 0.0);
-            
-            // b -> c
-            if(t >= 0.0) {
-                rgb.g = 4.0 * (t - (0.0/4.0));
-                rgb.b = 1.0;
+            if(vMC.y + uSpherePosition.y <= .0){
+                gl_FragColor = vec4(1. - finalColor, .5);
+            } else {
+                gl_FragColor = vec4(finalColor, .5); 
             }
             
-            // c -> g
-            if(t >= (1.0/4.0)) {
-                rgb.g = 1.0;
-                rgb.b = 1.0 - 4.0 * (t - (1.0/4.0));
-            }
-            
-            // g -> y
-            if(t >= (2.0/4.0)) {
-                rgb.r = 4.0 * (t - (2.0/4.0));
-                rgb.g = 1.0;
-            }
-            
-            // y -> r
-            if(t >= (3.0/4.0)) {
-                rgb.r = 1.0;
-                rgb.g = 1.0 - 4.0 * (t - (3.0/4.0));
-            }
-            
-            return rgb;
-        }
-
-        void main() {
-            vec3 myColor = OBJECTCOLOR;
-            vec2 st = vST;
-            vec3 Normal = normalize(vN);
-            vec3 Light = normalize(vL);
-            vec3 Eye = normalize(vE);
-            
-            vec3 Tangent = normalize(dFdx(vMC));
-            
-            float cosI = dot(Light, Tangent);
-            float cosR = dot(Eye, -Tangent);
-            float diffraction = abs(cosI - cosR);
-            
-            float wavelength = uGratingFreq * diffraction / uSpacing;
-            
-            vec3 diffractionColor = Rainbow(wavelength);
-            
-            vec3 ambient = uKa * myColor;
-            float d_light = max(dot(Normal, Light), uTol);
-            vec3 diffuse = uKd * d_light * myColor;
-            
-            float s = 0.0;
-            if(d_light > 0.0) {
-                vec3 ref = normalize(reflect(-Light, Normal));
-                float cosphi = dot(Eye, ref);
-                if(cosphi > 0.0)
-                    s = pow(max(cosphi, 0.0), uShininess);
-            }
-            vec3 specular = uKs * s * SPECULARCOLOR;
-            
-            // Fresnel calculation for holographic effect intensity
-            float fresnelFactor = pow(1.0 - max(0.0, dot(Eye, Normal)), 1.5);
-            float dv = smoothstep(0.0, 1.0, diffraction);
-            
-            vec3 finalColor = mix(
-                ambient + diffuse,
-                diffractionColor,
-                fresnelFactor * diffraction * .5
-            ) + specular;
-            
-            gl_FragColor = vec4(1. - finalColor, .5);
         }
     `;
       }
       var SphereArray = [];
       var SphereObject = class {
-        constructor(sphere, sphereNeg, boundary, x, y, z, sx, sy, sz) {
+        constructor(sphere, boundary, x, y, z, sx, sy, sz) {
           this.sphere = sphere;
           this.boundary = boundary;
-          this.sphereNeg = sphereNeg;
           this.x = x;
           this.y = y;
           this.z = z;
@@ -23700,28 +23720,29 @@ void main() {
           this.sy = sy;
           this.sz = sz;
         }
-        increment() {
-          this.x += this.sx;
-          if (this.x >= width - 2) {
+        increment(deltaTime) {
+          const speed = deltaTime * 60;
+          this.x += this.sx * speed;
+          if (this.x >= width - this.boundary.radius) {
             let n = new Vector3(1, 0, 0);
             this.reflect(n);
           } else if (this.x <= width * -1 + 2) {
             let n = new Vector3(-1, 0, 0);
             this.reflect(n);
           }
-          this.y += this.sy;
-          if (this.y >= height - 1) {
+          this.y += this.sy * speed;
+          if (this.y >= height - this.boundary.radius) {
             let n = new Vector3(0, 1, 0);
             this.reflect(n);
-          } else if (this.y <= -height - 1) {
+          } else if (this.y <= -height - this.boundary.radius) {
             let n = new Vector3(0, -1, 0);
             this.reflect(n);
           }
-          this.z += this.sz;
-          if (this.z >= zmax) {
+          this.z += this.sz * speed;
+          if (this.z >= zmax - this.boundary.radius) {
             let n = new Vector3(0, 0, 1);
             this.reflect(n);
-          } else if (this.z <= -zmax) {
+          } else if (this.z <= -zmax + this.boundary.radius) {
             let n = new Vector3(0, 0, -1);
             this.reflect(n);
           }
@@ -23739,15 +23760,17 @@ void main() {
           this.sphere.position.y = this.y;
           this.sphere.position.z = this.z;
           this.boundary.center.set(this.x, this.y, this.z);
-          this.sphereNeg.position.x = this.x;
-          this.sphereNeg.position.y = this.y;
-          this.sphereNeg.position.z = this.z;
+          this.sphere.material.uniforms.uSpherePosition.value.set(
+            this.sphere.position.x,
+            this.sphere.position.y,
+            this.sphere.position.z
+          );
         }
       };
-      var createSphere = (aspect2) => {
+      var createSphere = () => {
         let s = [0, 0, 0];
         for (let i = 0; i < s.length; i++) {
-          s[i] = parseFloat(Math.random() * 0.02) * (Math.round(Math.random()) ? 1 : -1);
+          s[i] = Math.random() * 0.01 * (Math.random() > 0.05 ? 1 : -1);
         }
         let x = Math.random() * (width + 0) + 0;
         x *= Math.round(Math.random()) ? 1 : -1;
@@ -23755,35 +23778,38 @@ void main() {
         y *= Math.round(Math.random()) ? 1 : -1;
         let z = Math.random() * (4 + 0) + 0;
         z *= Math.round(Math.random()) ? 1 : -1;
-        const radius = 0.5;
+        const radius = isMobile ? 0.2 : 0.5;
+        const segments = isMobile ? 32 : 64;
         let spacing = Math.random() * 10 + 1 + 1;
         let grating = Math.random() * 10 + 1 + 1;
-        const geometry = new SphereGeometry(radius, 128, 128);
-        const materialNeg = new createNegatedHolographicMaterial(spacing, grating);
+        const geometry = new SphereGeometry(radius, segments, segments);
         const materialReg = new createHolographicMaterial(spacing, grating);
         materialReg.flatShading = false;
         const sphere = new Mesh(geometry, materialReg);
         const boundingSphere = new Sphere(sphere.position, radius);
-        materialNeg.flatShading = false;
-        const sphereNeg = new Mesh(geometry, materialNeg);
-        return new SphereObject(sphere, sphereNeg, boundingSphere, x, y, z, s[0], s[1], s[2]);
+        return new SphereObject(sphere, boundingSphere, x, y, z, s[0], s[1], s[2]);
       };
       var SceneManager = {
         currentScene: "home",
-        init() {
+        init(isMobile2) {
+          SphereArray.forEach((s) => null);
           for (let i = 0; i < 20; i++) {
-            SphereArray.push(createSphere(window.innerHeight / window.innerWidth));
+            SphereArray.push(createSphere(isMobile2));
             scene.add(SphereArray[i].sphere);
-            negScene.add(SphereArray[i].sphereNeg);
           }
         }
       };
-      SceneManager.init();
-      function animate() {
+      function init() {
+        setupRenderer();
+        SceneManager.init();
+      }
+      var lastTime = 0;
+      function animate(time) {
+        const deltaTime = (time - lastTime) / 1e3;
+        lastTime = time;
         renderer.render(scene, camera);
-        negRenderer.render(negScene, camera);
         for (let i = 0; i < SphereArray.length; i++) {
-          SphereArray[i].increment();
+          SphereArray[i].increment(deltaTime);
           SphereArray[i].setPosition();
           for (let j = i + 1; j < SphereArray.length; j++) {
             const s1 = SphereArray[i];
@@ -23793,7 +23819,8 @@ void main() {
             const distanceVec = pos1.clone().sub(pos2);
             const distance = distanceVec.length();
             const minDistance = s1.boundary.radius + s2.boundary.radius;
-            if (distance < minDistance) {
+            const epsilon = 1e-3;
+            if (distance < minDistance - epsilon) {
               const penetrationDepth = minDistance - distance;
               const normal = distanceVec.normalize();
               const vel1 = new Vector3(s1.sx, s1.sy, s1.sz);
@@ -23817,6 +23844,13 @@ void main() {
                 s2.x -= correction.x;
                 s2.y -= correction.y;
                 s2.z -= correction.z;
+                const maxSpeed = 0.05;
+                s1.sx = MathUtils.clamp(s1.sx, -maxSpeed, maxSpeed);
+                s1.sy = MathUtils.clamp(s1.sy, -maxSpeed, maxSpeed);
+                s1.sz = MathUtils.clamp(s1.sz, -maxSpeed, maxSpeed);
+                s2.sx = MathUtils.clamp(s2.sx, -maxSpeed, maxSpeed);
+                s2.sy = MathUtils.clamp(s2.sy, -maxSpeed, maxSpeed);
+                s2.sz = MathUtils.clamp(s2.sz, -maxSpeed, maxSpeed);
                 s1.setPosition();
                 s2.setPosition();
               }
@@ -23825,10 +23859,13 @@ void main() {
         }
       }
       renderer.setAnimationLoop(animate);
-      negRenderer.setAnimationLoop(animate);
-      window.addEventListener("resize", (e) => {
-        let SphereArray2 = null;
-        SceneManager.init();
+      init();
+      var resizeTimeout;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          setupRenderer();
+        }, 200);
       });
     }
   });
