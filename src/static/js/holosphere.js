@@ -4,7 +4,7 @@ const scene = new THREE.Scene();
 // const negScene = new THREE.Scene();
 
 
-const camera = new THREE.PerspectiveCamera( 60,  1, 1, 500 );
+const camera = new THREE.PerspectiveCamera( 60,  1, 1, 5000 );
 
 let canvas = document.getElementById("holo-render")
 const renderer = new THREE.WebGLRenderer({canvas: canvas, alpha: true, antialias: true });
@@ -14,9 +14,9 @@ const renderer = new THREE.WebGLRenderer({canvas: canvas, alpha: true, antialias
 // negRenderer.setSize( window.innerWidth, window.innerHeight );
 const zmax = 4; 
 let isMobile;
-let vFOV = (camera.fov * Math.PI) / 180;
-let height = 2 * Math.tan(vFOV / 2) * Math.abs(camera.position.z);
-let width = height * camera.aspect;
+let vFOV 
+let height 
+let width 
 
 function setupRenderer(){
     renderer.setSize( window.innerWidth, window.innerHeight );
@@ -24,6 +24,7 @@ function setupRenderer(){
     isMobile = window.innerWidth < 1000;
 
     const fov = isMobile ? 40 : 70
+    camera.position.z = 7;
 
     camera.aspect = window.innerWidth / window.innerHeight / 2;
     camera.fov = fov;
@@ -34,7 +35,6 @@ function setupRenderer(){
 
    
 }
-camera.position.z = 6;
 
 
 function createHolographicMaterial(spacing, grating) {
@@ -190,7 +190,18 @@ function fragmentShader() {
 
 
 let SphereArray = []
-
+function getBoundariesAtZ(z) {
+    const vFOV = (camera.fov * Math.PI) / 180;
+    
+    const visibleHeightAtZ = 2 * Math.tan(vFOV / 2) * Math.abs(camera.position.z - z);
+    
+    const visibleWidthAtZ = visibleHeightAtZ * camera.aspect;
+    
+    return {
+        width: visibleWidthAtZ / 2,  
+        height: visibleHeightAtZ / 2  
+    };
+}
 class SphereObject {
     
     constructor(sphere, boundary, x, y, z, sx, sy, sz){
@@ -209,32 +220,41 @@ class SphereObject {
 
     increment(deltaTime){
         const speed = deltaTime * 60;
+        getBoundariesAtZ(this)
         this.x += this.sx * speed 
-        if(this.x >= width - this.boundary.radius){
-            
-            let n = new THREE.Vector3(1., 0., 0.)
-            this.reflect(n)
-        } else if(this.x <= -width + this.boundary.radius){
-            let n = new THREE.Vector3(-1., 0., 0.)
-            this.reflect(n)
+        const boundaries = getBoundariesAtZ(this.z);
+    
+        this.x += this.sx * speed;
+        if (this.x >= boundaries.width) {
+            let n = new THREE.Vector3(1., 0., 0.);
+            this.reflect(n);
+            this.x = boundaries.width; 
+        } else if (this.x <= -boundaries.width) {
+            let n = new THREE.Vector3(-1., 0., 0.);
+            this.reflect(n);
+            this.x = -boundaries.width; 
         }
-
-        this.y += this.sy * speed
-        if(this.y >= (height - this.boundary.radius)){
-            let n = new THREE.Vector3(0., 1., 0.)
-            this.reflect(n)
-        } else if(this.y <= -height + this.boundary.radius){
-            let n = new THREE.Vector3(0., -1., 0.)
-            this.reflect(n)
+        
+        this.y += this.sy * speed;
+        if (this.y >= boundaries.height) {
+            let n = new THREE.Vector3(0., 1., 0.);
+            this.reflect(n);
+            this.y = boundaries.height; 
+        } else if (this.y <= -boundaries.height) {
+            let n = new THREE.Vector3(0., -1., 0.);
+            this.reflect(n);
+            this.y = -boundaries.height; 
         }
-
-        this.z += this.sz * speed
-        if(this.z >= zmax - this.boundary.radius){
-            let n = new THREE.Vector3(0., 0., 1.)
-            this.reflect(n)
-        } else if(this.z <= -zmax + this.boundary.radius){
-            let n = new THREE.Vector3(0., 0., -1.)
-            this.reflect(n)
+        
+        this.z += this.sz * speed;
+        if (this.z >= zmax) {
+            let n = new THREE.Vector3(0., 0., 1.);
+            this.reflect(n);
+            this.z = zmax; 
+        } else if (this.z <= -zmax) {
+            let n = new THREE.Vector3(0., 0., -1.);
+            this.reflect(n);
+            this.z = -zmax; 
         }
 
 
@@ -282,7 +302,7 @@ const createSphere = () => {
     
     let z = (Math.random() * (4.0000 + 0.0000) + 0.0000)
     z *= Math.round(Math.random()) ? 1 : -1
-    const radius = isMobile ? 0.2 : 0.5;
+    const radius = isMobile ? 0.085 : 0.5;
     const segments = isMobile ? 32 : 128;    
     let spacing = (Math.random() * 10 + 1) + 1
     let grating = (Math.random() * 10 + 1) + 1
@@ -312,7 +332,7 @@ const SceneManager = {
     currentScene: 'home',
     init(isMobile){
         // SphereArray.forEach(s => null)
-        for(let i = 0; i < 25; i++){
+        for(let i = 0; i < 10; i++){
             SphereArray.push(createSphere(isMobile))
             scene.add( SphereArray[i].sphere )
             
