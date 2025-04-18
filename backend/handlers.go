@@ -198,6 +198,12 @@ var funcMap = template.FuncMap{
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
+	// os.MkdirAll("output", os.ModePerm)
+	// outFile, err := os.Create("output/index.html")
+	// if err != nil {
+	// 	log.Println(err.Error())
+	// }
+	// defer outFile.Close()
 
 	psSet := make(map[string]bool)
 	pcString := []string{}

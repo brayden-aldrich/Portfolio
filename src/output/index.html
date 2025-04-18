@@ -1,0 +1,437 @@
+
+<!doctype html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8'>
+        <title>Portfolio</title>
+        <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+        <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+        <script src="https://kit.fontawesome.com/0cdcaaf032.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <script type="module" src="/public/main.js"></script>
+    </head>
+    <body>
+        <nav id="mobile-nav" class="hidden">
+
+            <i class="material-symbols-outlined mob-nav-burger">
+                menu
+            </i>
+            
+            
+            <ul id="navlist" class="collapse-nav-burger"> 
+                <li><a href="#home">home</a></li>
+                <li><a href="#about">about</a></li>
+                <li><a href="#experience">experience</a></li>
+                <li><a class="mobile-nav" href="#resume">resume</a></li>
+            </ul>
+        </nav>
+        <nav id="desktop" >
+            <div class="navleft">
+                <a href="#home">Home</a> 
+                <a href="#about">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#resume">Resume</a>
+            </div>
+            <div class="navright">
+                <a href="https://github.com/brayden-aldrich" target="_blank"><i class="fa-brands fa-github" id="github-icon"></i></a>
+                <a href="https://www.linkedin.com/in/braydenaldrich/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+        </nav>
+        <div id="threejs-home-about">
+            <canvas id="holo-render"></canvas>
+
+            
+            <div id="home">
+
+                <div id="intro-text">
+                    <!-- <img src="/static/img/headshot.jpg" alt="A picture of Brayden Aldrich"> -->
+                    <h1>    
+                        Brayden Aldrich 
+                    </h1>
+                </div>
+
+            </div>
+            
+          
+            <div id="about">
+                <div id="about-content">
+
+                    <img src="/static/img/headshot.jpg" alt="Brayden Aldrich">
+                    <p id="about-p">I'm a senior at Oregon State studying computer science. I love to build creative solutions and solve practical problems. 
+                        My area of expertise is Full Stack Development,
+                        and I have a personal interest in Audio and Graphics.</p> 
+                </div>
+                
+                <!-- <canvas id="neg-holo-render"></canvas> -->
+              
+               
+            </div>
+            
+        </div>
+
+        <div id="experience">
+
+            <div id="work">
+                <div id="work-header">
+                    <h1 id="work-headline">Work</h1>
+                    <select name="work-companies-selection" id="work-companies-selection">
+                        <option value="">All</option>
+                        
+                            <option value="Yazaki North America" id="Yazaki North America">Yazaki North America</option>
+                        
+                    </select>
+                </div>
+                
+                <h1 id="company-headline">Yazaki North America</h1>
+
+                
+                    
+                    <div class="company">
+                        
+                        <ul id="work-list">
+                            <li id="department">Stellantis BU</li>
+                            <li id="role">Software Engineer Intern</li>
+                            <p id="date">June 2024 - September 2024</p>
+                           
+                                <li class="description">In my last internship, I dove heavily into manipulating and displaying data pertaining to both products and engineering. I created 6 macros, saving hundreds of hours of work in total, in three seperate divisions within the business unit. In the ever increasing automotive crunch, this allows engineers to focus on creating better end products. I was also lucky to expand beyond the walls of Stellantis and create a web application that was used in a fellow intern teams demo to upper management.</li>
+                            
+                                <h3 class="achievements-h3">Achievements</h3>
+                                
+                                    <li class="achievements">Created six sustainable macros that will save dozens of hours of work, having never coded in VBA before.</li>
+                                
+                                    <li class="achievements">Created a Load Calculator web application for the R & D Intern teams project showcase, with all animations and functionalities written in vanilla JavaScript.</li>
+                                
+                           
+                            <h3 class="tech-h3">Technologies</h3>
+                            <div id="tech">
+                                
+                                    <div>Visual Basic</div>
+                                
+                                    <div>Excel</div>
+                                
+                                    <div>Javascript</div>
+                                
+                                    <div>CSS</div>
+                                
+                                    <div>HTML</div>
+                                
+                            </div>
+                        </ul>
+                    </div>
+ 
+                
+                    
+                    <div class="company">
+                        
+                        <ul id="work-list">
+                            <li id="department">GM BU</li>
+                            <li id="role">Software Engineer Intern</li>
+                            <p id="date">June 2023 - September 2023</p>
+                           
+                                <li class="description">For my second internship, I was focused on two products: a JSON DLL for Siemens ModularXC, and an all inclusive macro, a rewrite of a previous macro but in C# for better performance. I was able to explore the C# ecosystem for the first time, and build the groundwork for a sustainable solution. This is the first time I dealt with requirements and timelines, and I gained considerable experiences in both my successes and failures.</li>
+                            
+                                <h3 class="achievements-h3">Achievements</h3>
+                                
+                                    <li class="achievements">Created an Excel plugin and DLL using C#, having never used the language before.</li>
+                                
+                                    <li class="achievements">Won the “Intern Process Improvement” challenge with an idea to expedite the testing and validation process for parts.</li>
+                                
+                           
+                            <h3 class="tech-h3">Technologies</h3>
+                            <div id="tech">
+                                
+                                    <div>C#</div>
+                                
+                                    <div>Excel</div>
+                                
+                            </div>
+                        </ul>
+                    </div>
+ 
+                
+                    
+                    <div class="company">
+                        
+                        <ul id="work-list">
+                            <li id="department">EI Software BU</li>
+                            <li id="role">Software Engineer Intern</li>
+                            <p id="date">June 2022 - September 2022</p>
+                           
+                                <li class="description">In my first internship, I worked alongside 3 other interns in a Scrum team within the EI Software department. This was my first introduction to Scrum, as well as working in a professional environment -- the closest I got until then was commercial cleaning in an office building. I was able to prove the use case of Python for the head of the department by building a Python app plus a GUI to interface with PTC Integrity, a version control manager. I also helped bring back the asset control project, where I dove into the data analysis lifecycle for the first time: compiling and cleaning data.</li>
+                            
+                                <h3 class="achievements-h3">Achievements</h3>
+                                
+                                    <li class="achievements">Proved Pythons use case by creating an application to interface with PTC Integrity</li>
+                                
+                                    <li class="achievements">Revived the asset management project and compiled all asset sources into a proven data type within PTC Integrity</li>
+                                
+                           
+                            <h3 class="tech-h3">Technologies</h3>
+                            <div id="tech">
+                                
+                                    <div>Python</div>
+                                
+                                    <div>Excel</div>
+                                
+                                    <div>PTC Integrity</div>
+                                
+                            </div>
+                        </ul>
+                    </div>
+ 
+                
+                
+            </div>
+            <div id="projects">
+                <div id="projects-header">
+                    <h1 id="projects-headline">Projects</h1>
+                    
+                    <label for="companies-selection"></label>
+                    <select name="companies-selection" id="companies-selection">
+                        <option value="">All</option>
+                        
+                            <option value="Oregon State University" id="Oregon State University">Oregon State University</option>
+                        
+                            <option value="Personal" id="Personal">Personal</option>
+                        
+                            <option value="Yazaki North America" id="Yazaki North America">Yazaki North America</option>
+                        
+                    </select>
+                </div>
+             
+                
+                    <div id="Oregon State University" class="company project-card">
+                        <ul id="work-list">
+                            <li id="department">Oregon State University</li>
+                            <li id="role">
+                                
+                                    <a href="https://github.com/digitaldisarray/CTFCollab" target="_blank">Collaborative Note Taking App <span class="material-symbols-outlined">link</span></a>
+                                
+                            </li>
+                
+                            <li class="description">Capstone project created for Oregon State's security club. Real-time document editing, document publishing, and challenge tracking for CTF competitions. FOSS and self-hostable on low-end hardware.</li>
+                
+                            
+                                <img src="/static/img/projects/ctf-collab/ctf-collab-home.png" alt="Project image: Collaborative Note Taking App" class="project-image">
+                            
+                
+                            <h3 class="tech-h3">Technologies</h3>
+                            <div id="tech">
+                                
+                                    <div>Go</div>
+                                
+                                    <div>MySQL</div>
+                                
+                                    <div>SQLC</div>
+                                
+                                    <div>TypeScript</div>
+                                
+                                    <div>SvelteKit</div>
+                                
+                                    <div>Tailwind</div>
+                                
+                                    <div>Docker</div>
+                                
+                            </div>
+                        </ul>
+                    </div>
+                
+                    <div id="Personal" class="company project-card">
+                        <ul id="work-list">
+                            <li id="department">Personal</li>
+                            <li id="role">
+                                
+                                    This Portfolio
+                                
+                            </li>
+                
+                            <li class="description">Created and designed to showcase my abilities and experience. Utilizes Three.js and GLSL shaders, as well as Go templates. The holographic shader was adapted from a final project in my shaders class.</li>
+                
+                            
+                
+                            <h3 class="tech-h3">Technologies</h3>
+                            <div id="tech">
+                                
+                                    <div>Go</div>
+                                
+                                    <div>Three.js</div>
+                                
+                                    <div>GLSL</div>
+                                
+                            </div>
+                        </ul>
+                    </div>
+                
+                    <div id="Oregon State University" class="company project-card">
+                        <ul id="work-list">
+                            <li id="department">Oregon State University</li>
+                            <li id="role">
+                                
+                                    <a href="https://github.com/brayden-aldrich/picnic-defender" target="_blank">Picnic Defenders <span class="material-symbols-outlined">link</span></a>
+                                
+                            </li>
+                
+                            <li class="description">Simple game where users needs to swat bugs before they reach the picnic. Our professor added it to his "Hall of Fame" site, which showcases the best final projects each semester.</li>
+                
+                            
+                                <img src="/static/img/projects/picnic-defenders/picnic-defenders-home.png" alt="Project image: Picnic Defenders" class="project-image">
+                            
+                
+                            <h3 class="tech-h3">Technologies</h3>
+                            <div id="tech">
+                                
+                                    <div>Javascript</div>
+                                
+                                    <div>CSS</div>
+                                
+                                    <div>Node.js</div>
+                                
+                            </div>
+                        </ul>
+                    </div>
+                
+                    <div id="Oregon State University" class="company project-card">
+                        <ul id="work-list">
+                            <li id="department">Oregon State University</li>
+                            <li id="role">
+                                
+                                    <a href="https://github.com/brayden-aldrich/Mastermind-Assembly" target="_blank">Mastermind MASM <span class="material-symbols-outlined">link</span></a>
+                                
+                            </li>
+                
+                            <li class="description">Mastermind created in Microsoft Macro Assembler (MASM). I was responsible for programming user interaction via key commands, setting the ui response, and game state flow. </li>
+                
+                            
+                                <img src="/static/img/projects/mastermind.png" alt="Project image: Mastermind MASM" class="project-image">
+                            
+                
+                            <h3 class="tech-h3">Technologies</h3>
+                            <div id="tech">
+                                
+                                    <div>MASM</div>
+                                
+                            </div>
+                        </ul>
+                    </div>
+                
+                    <div id="Oregon State University" class="company project-card">
+                        <ul id="work-list">
+                            <li id="department">Oregon State University</li>
+                            <li id="role">
+                                
+                                    Treasure Hunt
+                                
+                            </li>
+                
+                            <li class="description">Mobile treasure hunt game where the user must decipher clues to find the location hinted at. Features 3 locations around Corvallis, Oregon.</li>
+                
+                            
+                                <img src="/static/img/projects/treasure-hunt/treasure-hunt.png" alt="Project image: Treasure Hunt" class="project-image">
+                            
+                
+                            <h3 class="tech-h3">Technologies</h3>
+                            <div id="tech">
+                                
+                                    <div>Jetpack Compose</div>
+                                
+                                    <div>Kotlin</div>
+                                
+                                    <div>Android Services</div>
+                                
+                            </div>
+                        </ul>
+                    </div>
+                
+                    <div id="Oregon State University" class="company project-card">
+                        <ul id="work-list">
+                            <li id="department">Oregon State University</li>
+                            <li id="role">
+                                
+                                    <a href="https://github.com/brayden-aldrich/smallsh" target="_blank">smallsh <span class="material-symbols-outlined">link</span></a>
+                                
+                            </li>
+                
+                            <li class="description">Bash shell implementation written in C in just 252 lines! Handles forks, redirects, comments, $$, exit, cd, status, and exec. Also detects SIGINT and SIGSTP signals. </li>
+                
+                            
+                
+                            <h3 class="tech-h3">Technologies</h3>
+                            <div id="tech">
+                                
+                                    <div>C</div>
+                                
+                                    <div>Bash</div>
+                                
+                            </div>
+                        </ul>
+                    </div>
+                
+                    <div id="Yazaki North America" class="company project-card">
+                        <ul id="work-list">
+                            <li id="department">Yazaki North America</li>
+                            <li id="role">
+                                
+                                    User Permissions Matrix
+                                
+                            </li>
+                
+                            <li class="description">Application written to find a users permissions within PTC Integrity for the EI Software Department.</li>
+                
+                            
+                
+                            <h3 class="tech-h3">Technologies</h3>
+                            <div id="tech">
+                                
+                                    <div>Python</div>
+                                
+                                    <div>TKinter</div>
+                                
+                                    <div>PTC Integrity</div>
+                                
+                            </div>
+                        </ul>
+                    </div>
+                
+                    <div id="Yazaki North America" class="company project-card">
+                        <ul id="work-list">
+                            <li id="department">Yazaki North America</li>
+                            <li id="role">
+                                
+                                    Load Calculator
+                                
+                            </li>
+                
+                            <li class="description">Web app to help with the R & D intern team's project demo. Will show the users battery use per appliance, and determine the appropriate package on a speed-o-meter like animation.</li>
+                
+                            
+                                <img src="/static/img/projects/makerspace.png" alt="Project image: Load Calculator" class="project-image">
+                            
+                
+                            <h3 class="tech-h3">Technologies</h3>
+                            <div id="tech">
+                                
+                                    <div>Javascript</div>
+                                
+                                    <div>CSS</div>
+                                
+                                    <div>HTML</div>
+                                
+                            </div>
+                        </ul>
+                    </div>
+                
+            </div>
+        </div>
+        <section id="resume">
+            <iframe id="resume-iframe" src="/static/pdf/b.aldrich.pdf" frameborder="0"></iframe>
+        </section>
+
+        <footer>Powered by <a href='https://golang.org/'>Go</a> and <a href="https://threejs.org/">three.js</a></footer>
+        <script type="module" src="/public/holosphere.js"></script>
+        
+    </body>
+</html>
