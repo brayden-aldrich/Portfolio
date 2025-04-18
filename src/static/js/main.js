@@ -5,6 +5,8 @@ window.addEventListener('resize', function () {
     window.location.reload(); 
 });
 
+
+
 let isMobile = (window.innerWidth < 1000)
 if(isMobile){
     document.getElementById("mobile-nav").classList.remove("hidden")
@@ -20,7 +22,6 @@ function getChildElementByClass(parentElement, className){
     }
     return null;
 }
-
 
 document.getElementById("companies-selection").addEventListener("change", (e)=>{
     let cards = document.getElementsByClassName("project-card")

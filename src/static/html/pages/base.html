@@ -26,7 +26,7 @@
                 <li><a href="#home">home</a></li>
                 <li><a href="#about">about</a></li>
                 <li><a href="#experience">experience</a></li>
-                <li><a href="#resume">resume</a></li>
+                <li><a class="mobile-nav" href="#resume">resume</a></li>
             </ul>
         </nav>
         <nav id="desktop" >
@@ -115,7 +115,6 @@
  
                 {{end}}
                 
-               
             </div>
             <div id="projects">
                 <div id="projects-header">
@@ -159,16 +158,12 @@
                 {{ end }}
             </div>
         </div>
-        <section>
-
+        <section id="resume">
+            <iframe id="resume-iframe" src="/static/pdf/b.aldrich.pdf" frameborder="0"></iframe>
         </section>
 
-
-        
-       
         <footer>Powered by <a href='https://golang.org/'>Go</a> and <a href="https://threejs.org/">three.js</a></footer>
         <script type="module" src="/public/holosphere.js"></script>
-        <script type="module" src="/public/photocube.js"></script>
         
     </body>
 </html>
