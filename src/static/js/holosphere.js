@@ -1,23 +1,19 @@
 import * as THREE from 'three';
 
 const scene = new THREE.Scene();
-// const negScene = new THREE.Scene();
-
 
 const camera = new THREE.PerspectiveCamera( 60,  1, 1, 5000 );
 
 let canvas = document.getElementById("holo-render")
 const renderer = new THREE.WebGLRenderer({canvas: canvas, alpha: true, antialias: true });
 
-// let negCanvas = document.getElementById("neg-holo-render")
-// const negRenderer = new THREE.WebGLRenderer({canvas: negCanvas, alpha: true});
-// negRenderer.setSize( window.innerWidth, window.innerHeight );
 const zmax = 4; 
 let isMobile;
 let vFOV 
 let height 
 let width 
 
+// main setup function for renderer and other variables
 function setupRenderer(){
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.setPixelRatio(Math.max(window.devicePixelRatio, 2));
@@ -63,7 +59,7 @@ function createHolographicMaterial(spacing, grating) {
     return material;
 }
 
-
+// vertex shader for holographic effect
 function vertexShader() {
     return `
         varying vec2 vST;
@@ -88,6 +84,7 @@ function vertexShader() {
     `;
 }
 
+// shader for the holographic effect
 function fragmentShader() {
     return `
         varying vec2 vST;
@@ -190,6 +187,7 @@ function fragmentShader() {
 
 
 let SphereArray = []
+// need to calculate with perspective in mind to get accurate borders for collision
 function getBoundariesAtZ(z) {
     const vFOV = (camera.fov * Math.PI) / 180;
     
@@ -202,6 +200,8 @@ function getBoundariesAtZ(z) {
         height: visibleHeightAtZ / 2  
     };
 }
+
+// main sphere class, contains all functions and variables necessary to move sphere on screen
 class SphereObject {
     
     constructor(sphere, boundary, x, y, z, sx, sy, sz){
@@ -287,11 +287,15 @@ class SphereObject {
   
 }
 
-
+// Creates a sphere with random properties 
 const createSphere = () => {
     let s = [0., 0., 0.]
+    let max = (isMobile) ? 0.001 : 0.005
+    let low = (isMobile) ? 0.0001 : 0.001
+    console.log(max)
     for (let i = 0; i < s.length; i++) {
-        s[i] = (Math.random() * 0.01) * (Math.random() > 0.05 ? 1 : -1); 
+
+        s[i] = (Math.random() * low) * (Math.random() > max ? 1 : -1); 
     }
 
     let x = (Math.random() * (width + 0.0000) + 0.0000)
@@ -310,28 +314,20 @@ const createSphere = () => {
 
     const geometry = new THREE.SphereGeometry( radius, segments, segments )
     
-
-
     const materialReg = new createHolographicMaterial(spacing, grating)
  
-
-    
     materialReg.flatShading = false; 
     const sphere = new THREE.Mesh( geometry, materialReg )
     sphere.scale.set(1, 1, 1);
     const boundingSphere = new THREE.Sphere(sphere.position, radius)
 
-
-
-
     return new SphereObject(sphere, boundingSphere, x, y, z, s[0], s[1], s[2])
-
 }
 
+// Creates all spheres 
 const SceneManager = {
     currentScene: 'home',
     init(isMobile){
-        // SphereArray.forEach(s => null)
         for(let i = 0; i < 10; i++){
             SphereArray.push(createSphere(isMobile))
             scene.add( SphereArray[i].sphere )
@@ -340,6 +336,8 @@ const SceneManager = {
     },
    
 }
+
+// initialize the threejs animation
 function initApp(){
     setupRenderer()
     SphereArray.forEach(s => scene.remove(s.sphere));
@@ -351,78 +349,83 @@ let lastTime = 0
 function animate(time)
 {
 
-    const deltaTime = (time - lastTime) / 1000;
+    const deltaTime = (time - lastTime) / 100;
     lastTime = time
     renderer.render( scene, camera );
     for(let i = 0; i < SphereArray.length; i++){
         
         SphereArray[i].increment(deltaTime)
         SphereArray[i].setPosition()
+        // check for collision
         for(let j = i + 1; j < SphereArray.length; j++){
-              const s1 = SphereArray[i];
-              const s2 = SphereArray[j];
-              
-              const pos1 = new THREE.Vector3(s1.x, s1.y, s1.z);
-              const pos2 = new THREE.Vector3(s2.x, s2.y, s2.z);
-              const distanceVec = pos1.clone().sub(pos2);
-              const distance = distanceVec.length();
-              
-              const minDistance = s1.boundary.radius + s2.boundary.radius;
-              
-              if (distance < minDistance) {
-                  const penetrationDepth = minDistance - distance;
-                  
-                  const normal = distanceVec.normalize();
-                  
-                  const vel1 = new THREE.Vector3(s1.sx, s1.sy, s1.sz);
-                  const vel2 = new THREE.Vector3(s2.sx, s2.sy, s2.sz);
-                  
-                  const relativeVelocity = vel1.clone().sub(vel2);
-                  const normalVelocity = relativeVelocity.dot(normal);
-                  
-                  if (normalVelocity < 0) {
-                      const restitution = 1.0; 
-                      const impulseScalar = -(1 + restitution) * normalVelocity / 2;
-                      
-                      const impulse = normal.clone().multiplyScalar(impulseScalar);
-                      
-                      s1.sx += impulse.x;
-                      s1.sy += impulse.y;
-                      s1.sz += impulse.z;
-                      
-                      s2.sx -= impulse.x;
-                      s2.sy -= impulse.y;
-                      s2.sz -= impulse.z;
-                      
-                      const correction = normal.clone().multiplyScalar(penetrationDepth / 2);
-                      
-                      s1.x += correction.x;
-                      s1.y += correction.y;
-                      s1.z += correction.z;
-                      
-                      s2.x -= correction.x;
-                      s2.y -= correction.y;
-                      s2.z -= correction.z;
-                      const maxSpeed = 0.05;
-                      s1.sx = THREE.MathUtils.clamp(s1.sx, -maxSpeed, maxSpeed);
-                      s1.sy = THREE.MathUtils.clamp(s1.sy, -maxSpeed, maxSpeed);
-                      s1.sz = THREE.MathUtils.clamp(s1.sz, -maxSpeed, maxSpeed);
-                      s2.sx = THREE.MathUtils.clamp(s2.sx, -maxSpeed, maxSpeed);
-                      s2.sy = THREE.MathUtils.clamp(s2.sy, -maxSpeed, maxSpeed);
-                      s2.sz = THREE.MathUtils.clamp(s2.sz, -maxSpeed, maxSpeed);
-                      s1.setPosition();
-                      s2.setPosition();
-                  }
-              }
+            const s1 = SphereArray[i];
+            const s2 = SphereArray[j];
+            
+            const pos1 = new THREE.Vector3(s1.x, s1.y, s1.z);
+            const pos2 = new THREE.Vector3(s2.x, s2.y, s2.z);
+            const distanceVec = pos1.clone().sub(pos2); 
+            const distance = distanceVec.length();
+            
+            const minDistance = s1.boundary.radius + s2.boundary.radius;
+            // if collision
+            if (distance < minDistance) {
+                // how much overlap is there
+                const penetrationDepth = minDistance - distance;
+                
+                const normal = distanceVec.normalize();
+                
+                const vel1 = new THREE.Vector3(s1.sx, s1.sy, s1.sz);
+                const vel2 = new THREE.Vector3(s2.sx, s2.sy, s2.sz);
+                
+                const relativeVelocity = vel1.clone().sub(vel2);
+                const normalVelocity = relativeVelocity.dot(normal);
+                
+                if (normalVelocity < 0) {
+                    const restitution = 1.0; 
+                    const impulseScalar = -(1 + restitution) * normalVelocity / 2;
+                    
+                    const impulse = normal.clone().multiplyScalar(impulseScalar);
+                    
+                    s1.sx += impulse.x;
+                    s1.sy += impulse.y;
+                    s1.sz += impulse.z;
+                    
+                    s2.sx -= impulse.x;
+                    s2.sy -= impulse.y;
+                    s2.sz -= impulse.z;
+                    
+                    const correction = normal.clone().multiplyScalar(penetrationDepth / 2);
+                    
+                    s1.x += correction.x;
+                    s1.y += correction.y;
+                    s1.z += correction.z;
+                    
+                    s2.x -= correction.x;
+                    s2.y -= correction.y;
+                    s2.z -= correction.z;
+                    const maxSpeed = 0.05;
+                    // clamp to avoid floating point weirdness
+                    s1.sx = THREE.MathUtils.clamp(s1.sx, -maxSpeed, maxSpeed);
+                    s1.sy = THREE.MathUtils.clamp(s1.sy, -maxSpeed, maxSpeed);
+                    s1.sz = THREE.MathUtils.clamp(s1.sz, -maxSpeed, maxSpeed);
+                    s2.sx = THREE.MathUtils.clamp(s2.sx, -maxSpeed, maxSpeed);
+                    s2.sy = THREE.MathUtils.clamp(s2.sy, -maxSpeed, maxSpeed);
+                    s2.sz = THREE.MathUtils.clamp(s2.sz, -maxSpeed, maxSpeed);
+                    s1.setPosition();
+                    s2.setPosition();
+                }
+            }
               
         }
        
     }
     
 }
+
 renderer.setAnimationLoop( animate );
 initApp()
 setupRenderer();
+
 let resizeTimeout;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);

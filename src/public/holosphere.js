@@ -23785,8 +23785,11 @@ void main() {
       };
       var createSphere = () => {
         let s = [0, 0, 0];
+        let max = isMobile ? 1e-3 : 5e-3;
+        let low = isMobile ? 1e-4 : 1e-3;
+        console.log(max);
         for (let i = 0; i < s.length; i++) {
-          s[i] = Math.random() * 0.01 * (Math.random() > 0.05 ? 1 : -1);
+          s[i] = Math.random() * low * (Math.random() > max ? 1 : -1);
         }
         let x = Math.random() * (width + 0) + 0;
         x *= Math.round(Math.random()) ? 1 : -1;
@@ -23823,7 +23826,7 @@ void main() {
       }
       var lastTime = 0;
       function animate(time) {
-        const deltaTime = (time - lastTime) / 1e3;
+        const deltaTime = (time - lastTime) / 100;
         lastTime = time;
         renderer.render(scene, camera);
         for (let i = 0; i < SphereArray.length; i++) {

@@ -11,15 +11,17 @@ html, body {
     padding: 0;
     height: 100%;
     width: 100%;
-    min-width: 600px; 
+
+
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 #navlist {
     list-style-type: none;
     width: 100vw;
     position: absolute;
-    z-index: 2;
+    z-index: 100;
     left: 0;
     padding-top: 1.5rem;
     background-color: rgba(34, 40, 45, .25);
@@ -54,7 +56,7 @@ html, body {
     background-color: rgb(34, 40, 45);
     justify-content: space-between;
 
-    z-index: 3; 
+    z-index: 100; 
     padding: 1.5vh;
 
     height: 5rem;
@@ -145,7 +147,7 @@ nav {
     background-color: rgb(34, 40, 45);
     justify-content: space-between;
     display: flex;
-    z-index: 2; 
+    z-index: 4; 
     padding: 1.5vh;
 }
 
@@ -165,7 +167,7 @@ nav a {
 
     text-decoration: none;
     color: white;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
 }
 nav i {
     font-size: 1.5rem;
@@ -182,7 +184,7 @@ nav a:hover {
 
 footer a {
     text-decoration: none;
-    color: rgb(34, 40, 45);
+    color: rgba(174,211,255,1);
 }
 
 footer a:hover {
@@ -215,7 +217,6 @@ footer a:hover {
     display: inline;
     /* border-radius: 50%; */
     border: 2px solid #22282D;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 
     max-width: 250px;
 }
@@ -226,14 +227,13 @@ footer a:hover {
     text-align: center;
     align-content: center;
     justify-content: center;
-    background-color: white;
     border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-    border: 2px solid #22282D;
+    color: white;
+    /* text-shadow: 5px 5px 3px rgba(34, 40, 45, .5); */
 
     padding: 25px;
     font-size: 1.25rem;
-    color: rgb(34, 40, 45);
+    background-color: rgb(34, 40, 45);
     z-index: 1
 }
 
@@ -254,8 +254,7 @@ footer a:hover {
 
 }
 
-
-#company {
+.company {
     display: flex;
     position: relative; 
     flex-direction: column;
@@ -265,15 +264,22 @@ footer a:hover {
     flex-grow: 1; 
     color: white;
     margin-top: 1rem;
-
+    border: 2px solid rgba(174,211,255,1);
 }
-#company h1 {
-    font-size: 3.5rem;
+#company-headline {
+    top: 0;
+    position: sticky;
+    width: 100%;
+    font-size: 2.5rem;
     margin-bottom: 0.5rem;
     text-align: center;
-    color: white
-}
+    color: white;
+    /* z-index: 3; */
 
+}
+.link {
+    font-size: 5rem;
+}
 #work-list {
    
     list-style-type: none;
@@ -288,25 +294,31 @@ footer a:hover {
 
 #role, #department {
     font-weight: bold;
-    font-size: 3rem;
+    font-size: 2rem;
 }
-
+#role a {
+    text-decoration: none;
+    color: white;
+}
+#role a:hover {
+    color: rgba(174,211,255,1);
+}
 #date {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
 }
 .description {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
 }
 .achievements-h3,
 .tech-h3 {
-    font-size: 3rem;
-    padding: 0.3rem;
+    font-size: 2rem;
+    /* padding: 0.3rem; */
     margin: .3rem;
 }
 .achievements {
     list-style-type: disc;
     margin-left: 1.5rem;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
 }
 
 #date {
@@ -320,7 +332,7 @@ footer a:hover {
     flex-wrap: wrap;
     flex-direction: row;
     margin-top: auto;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
 }
 
@@ -341,37 +353,43 @@ footer a:hover {
 }
 
 #projects {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row; 
-    justify-content: start;
-    align-items: start;
+    display: flex;  
+    flex-wrap: wrap; 
+    justify-content: center; 
+    align-items: center; 
     gap: 1rem; 
+    width: 100%; 
     
 }
 
 .project-card {
-    display: flex;
-    flex-direction: column;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-    padding: 1rem;
-    margin-top: 2.5rem;
+    color: white;
+    padding: 0.3rem;
+    margin: 0.3rem 0;
 }
 #projects-header,
 #work-header {
+
+
+    top: 4vh;
+    position: sticky;
     display: flex;
     width: 100%;
+
+    background-color: rgb(34, 40, 45);
+   
     border-bottom: 2px solid rgba(174,211,255,1);
+    z-index: 3;
 }
 #projects-header h1,
 #work-header h1 {
-    display: flex;
+    
     width: 100%;
-    padding: 1.5rem;
-    padding-bottom: .25rem;
     justify-content: center;
+    align-items: center;
+    text-align: center;
     color: white;
+    display: flex;
 }
 
 #projects-header,
@@ -389,7 +407,9 @@ footer a:hover {
 
 #companies-selection,
 #work-companies-selection {
-    margin-top: 15px;
+    position: absolute;
+    font-size: 1rem;
+    padding: .5rem;
     justify-content: center;
     align-items: center;
 }
@@ -439,22 +459,24 @@ footer a:hover {
 }
 
 .project-card img {
-    
-    margin-right: auto;
-    max-width: 90%;  /* Ensures image doesn't overflow */
-    max-height: 90%;
-    display: block;    /* Removes extra space below image */
+    max-width: 100%; 
+    height: auto;
+    display: block;
+    margin: 0 auto;  /* Center the image if needed */
 }
 
 .project-name a{
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 .project-name a:hover{
     color: rgba(174,211,255,1);
 }
 
+#sticky {
+    position: sticky;
+}
 
 @media only screen and (max-width: 1000px) {
     #about-content img {
@@ -465,47 +487,47 @@ footer a:hover {
         width: 80%;
         font-size: 3rem;
     }
-
-
+    #department, 
+    #role,
+    .achievements-h3,
+    .tech-h3 {
+        font-size: 3rem;
+    }
+    #tech div {
+        font-size: 2rem;
+    }
+    .description,
+    #date,
+    .achievements {
+        font-size: 2.5rem;
+    }
     #work-header,
     #projects-header {
-
+        top: 6vh;
         border-bottom: 4px solid white
     }
 
-    #company {
-        width: 90vw;  /* Make it full-width for better stacking */
+    .company {
+        width: 90vw; 
         padding: 2rem;
-        font-size: 1.5rem; /* Adjust font size */
-        height: auto; /* Prevent height conflicts */
+        font-size: 1.5rem; 
+        height: auto; 
     }
     
-    #company h1 {
+    .company h1 {
         font-size: 4rem;
     }
    
     #projects-headline,
+    #company-headline,
     #work-headline {
         font-size: 4rem;
         margin: 0;
         padding: 0;
         color: white;
+        background-color: rgb(34, 40, 45);
+        
     }
-
-    .project-card {
-        display: inline-block;
-        width: 80vw;
-        font-size: 3rem;
-        min-height: 25vh;
-        max-height: 50vh;
-    }
-
-    .project-name {
-        font-size: 4rem;
-    }
+   
     
-    .project-name a {
-        font-size: 4rem;
-
-    }
 }
