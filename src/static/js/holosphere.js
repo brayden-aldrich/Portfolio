@@ -16,7 +16,7 @@ let width
 // main setup function for renderer and other variables
 function setupRenderer(){
     renderer.setSize( window.innerWidth, window.innerHeight );
-    renderer.setPixelRatio(Math.max(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     isMobile = window.innerWidth < 1000;
 
     const fov = isMobile ? 40 : 70
@@ -307,7 +307,7 @@ const createSphere = () => {
     let z = (Math.random() * (4.0000 + 0.0000) + 0.0000)
     z *= Math.round(Math.random()) ? 1 : -1
     const radius = isMobile ? 0.085 : 0.5;
-    const segments = isMobile ? 32 : 128;    
+    const segments = isMobile ? 16 : 128;    
     let spacing = (Math.random() * 10 + 1) + 1
     let grating = (Math.random() * 10 + 1) + 1
 

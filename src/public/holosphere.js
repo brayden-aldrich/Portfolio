@@ -23552,7 +23552,7 @@ void main() {
       var width;
       function setupRenderer() {
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.max(window.devicePixelRatio, 2));
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
         isMobile = window.innerWidth < 1e3;
         const fov2 = isMobile ? 40 : 70;
         camera.position.z = 7;
@@ -23798,7 +23798,7 @@ void main() {
         let z = Math.random() * (4 + 0) + 0;
         z *= Math.round(Math.random()) ? 1 : -1;
         const radius = isMobile ? 0.085 : 0.5;
-        const segments = isMobile ? 32 : 128;
+        const segments = isMobile ? 16 : 128;
         let spacing = Math.random() * 10 + 1 + 1;
         let grating = Math.random() * 10 + 1 + 1;
         const geometry = new SphereGeometry(radius, segments, segments);
