@@ -274,7 +274,7 @@ footer a:hover {
     flex-grow: 1; 
     color: white;
     margin-top: 1rem;
-    border: 2px solid rgba(174,211,255,1);
+    border-bottom: 2px solid rgba(174,211,255,1);
 }
 #company-headline {
     top: 0;
