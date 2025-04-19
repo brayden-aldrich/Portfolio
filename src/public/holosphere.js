@@ -23552,8 +23552,11 @@ void main() {
       var width;
       function setupRenderer() {
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
         isMobile = window.innerWidth < 1e3;
+        if (isMobile)
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+        else
+          renderer.setPixelRatio(Math.max(window.devicePixelRatio, 1.5));
         const fov2 = isMobile ? 40 : 70;
         camera.position.z = 7;
         camera.aspect = window.innerWidth / window.innerHeight / 2;
