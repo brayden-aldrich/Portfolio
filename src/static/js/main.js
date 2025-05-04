@@ -33,7 +33,6 @@ document.getElementById("companies-selection").addEventListener("change", (e)=>{
     } 
     for(let i = 0; i < cards.length; i++){
 
-        console.log(cards[i].id)
         if(cards[i].id !== e.currentTarget.value){
             cards[i].classList.add("hidden")
         }
@@ -84,12 +83,10 @@ let ul = document.getElementById("work-list")
 let ulBound = ul.getBoundingClientRect()
 let work = document.getElementById("work") 
 let workBound = work.getBoundingClientRect()
-console.log(workBound)
 
 // const timelineCompanyHeadline = createTimeline({defaults: {duration: 250}})
 
 window.addEventListener('scroll', () => {
-    // console.log(ul.getBoundingClientRect())
     let translateXPos = (ulBound.width / 2) + (ulBound.x / 2)
     let height = window.innerHeight;
     const triggerPoint = isMobile ? height * 2.5 : height * 2; 

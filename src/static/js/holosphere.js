@@ -297,7 +297,6 @@ const createSphere = () => {
     let s = [0., 0., 0.]
     let max = (isMobile) ? 0.001 : 0.005
     let low = (isMobile) ? 0.0001 : 0.001
-    console.log(max)
     for (let i = 0; i < s.length; i++) {
 
         s[i] = (Math.random() * low) * (Math.random() > max ? 1 : -1); 

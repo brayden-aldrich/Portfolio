@@ -23790,7 +23790,6 @@ void main() {
         let s = [0, 0, 0];
         let max = isMobile ? 1e-3 : 5e-3;
         let low = isMobile ? 1e-4 : 1e-3;
-        console.log(max);
         for (let i = 0; i < s.length; i++) {
           s[i] = Math.random() * low * (Math.random() > max ? 1 : -1);
         }

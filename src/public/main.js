@@ -2678,7 +2678,6 @@
           return;
         }
         for (let i = 0; i < cards.length; i++) {
-          console.log(cards[i].id);
           if (cards[i].id !== e.currentTarget.value) {
             cards[i].classList.add("hidden");
           }
@@ -2695,7 +2694,6 @@
       var ulBound = ul.getBoundingClientRect();
       var work = document.getElementById("work");
       var workBound = work.getBoundingClientRect();
-      console.log(workBound);
       window.addEventListener("scroll", () => {
         let translateXPos = ulBound.width / 2 + ulBound.x / 2;
         let height = window.innerHeight;
